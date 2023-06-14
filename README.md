@@ -1,5 +1,5 @@
 <h1> mentway API <h1> 
-<Strong> API FOR Mentorship services </strong>
+API FOR Mentorship services 
 change file src/main/resources/application_copy.properties to  application.properties and add your credntials
   
   <b>to run server</b>
