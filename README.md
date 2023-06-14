@@ -1,4 +1,4 @@
-<h1> mentway API <h1> 
+<h1> mentway API </h1> 
 API FOR Mentorship services 
 change file src/main/resources/application_copy.properties to  application.properties and add your credntials
   
