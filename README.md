@@ -21,6 +21,4 @@ change file src/main/resources/application_copy.properties to  application.prope
   <li>Run command
     <code>mvn spring-boot:run</code>
   </li>
-  
-   </ul>
-1 - install maven  
+   </ul> 
