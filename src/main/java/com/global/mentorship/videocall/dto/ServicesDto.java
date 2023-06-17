@@ -1,4 +1,4 @@
-package com.global.mentorship.user.dto;
+package com.global.mentorship.videocall.dto;
 
 import com.global.mentorship.base.dto.BaseDto;
 

@@ -1,10 +1,36 @@
 package com.global.mentorship.user.entity;
 
-import com.global.mentorship.base.entity.BaseEntity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-public class Mentor extends BaseEntity<Long>{
+@Getter
+@Setter
+public class Mentor extends User{
+	
+	@Lob
+	private String coverLetter;
+	
+	private boolean isValid;
+	
+	private String cvUrl;
+	
+	@ManyToOne
+	private Category category;
+	
+	@OneToMany(mappedBy = "mentor", 
+			cascade = CascadeType.ALL,
+			orphanRemoval = true)
+	private Set<MentorMentees> mentorsMentees = new HashSet<>();
 
 }

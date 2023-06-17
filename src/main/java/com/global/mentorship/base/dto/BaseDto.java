@@ -1,11 +1,13 @@
 package com.global.mentorship.base.dto;
 
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class BaseDto<ID extends Number> {
+@MappedSuperclass
+public abstract class BaseDto<ID extends Number> {
 	
 	private ID Id;
 

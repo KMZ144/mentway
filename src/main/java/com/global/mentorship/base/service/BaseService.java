@@ -10,7 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class BaseService<T extends BaseEntity<ID>,ID extends Number> {
+public abstract class BaseService<T extends BaseEntity<ID>,ID extends Number> {
 	
 	@Autowired
 	private BaseRepo<T,ID> baseRepo;

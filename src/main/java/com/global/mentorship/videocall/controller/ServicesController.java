@@ -1,6 +1,5 @@
 package com.global.mentorship.videocall.controller;
 
-
-public class SessionsController {
+public class ServicesController {
 
 }
