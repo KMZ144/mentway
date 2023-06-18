@@ -5,6 +5,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: myapp
+    ports:
+      - '3305:3306'
     volumes:
       - mysql-data:/var/lib/mysql
   myapp:
@@ -19,7 +21,7 @@ services:
       spring.jpa.hibernate.ddl-auto: create-drop
       logging.level.org.hibernate: info
       logging.level.org.hibernate.SQL: debug
-      spring.jpa.properties.hibernate.format_sql: true
+      spring.jpa.properties.hibernate.format_sql: 'true'
       springdoc.swagger-ui.operationsSorter: method
       application-description: mentorship API
       application-version: 1.0
