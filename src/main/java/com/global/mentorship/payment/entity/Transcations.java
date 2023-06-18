@@ -5,6 +5,8 @@ import java.util.Date;
 import com.global.mentorship.base.entity.BaseEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Transcations extends BaseEntity<Long> {
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private PaymentMethod paymentMethod;
 	
 	private int amount;
 	
