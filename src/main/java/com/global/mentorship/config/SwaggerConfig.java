@@ -16,10 +16,7 @@ public class SwaggerConfig {
 	
 	@Bean
 	public GroupedOpenApi userManagementApi() {
-		String packagesToscan[] = { "com.global.mentorship.user.controller",
-									"com.global.mentorship.payment.controller",
-									"com.global.mentorship.videocall.controller",
-									"com.global.mentorship.notification.controller"};
+		String packagesToscan[] = { "com.global.mentorship.user.controller",};
 		return GroupedOpenApi.builder()
 		                     .group("User Management API")
 							 .packagesToScan(packagesToscan)
