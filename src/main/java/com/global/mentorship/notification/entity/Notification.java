@@ -1,6 +1,6 @@
 package com.global.mentorship.notification.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.global.mentorship.base.entity.BaseEntity;
 import com.global.mentorship.user.entity.User;
@@ -23,7 +23,7 @@ public class Notification extends BaseEntity<Long> {
 	
 	private String type;
 	
-	private Date date;
+	private LocalDateTime date;
 	
 	
 

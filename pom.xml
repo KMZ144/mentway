@@ -15,7 +15,7 @@
 	<description>mentway-api</description>
 	<properties>
 		<java.version>17</java.version>
-		
+		<packaging>jar</packaging>
 		<springdoc.version>2.0.2</springdoc.version>
 		<mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.version>1.18.22</lombok.version>
@@ -79,6 +79,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+
+		
+		
 			</dependencies>
 
 	<build>

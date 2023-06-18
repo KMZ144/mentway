@@ -16,7 +16,9 @@ public class SwaggerConfig {
 	
 	@Bean
 	public GroupedOpenApi userManagementApi() {
-		String packagesToscan[] = { "com.global.mentorship.user.controller",};
+		String packagesToscan[] = { "com.global.mentorship.user.controller",
+				
+		};
 		return GroupedOpenApi.builder()
 		                     .group("User Management API")
 							 .packagesToScan(packagesToscan)
@@ -25,14 +27,41 @@ public class SwaggerConfig {
 	}
 	
 	@Bean
-	public GroupedOpenApi setupApi() {
-		String packagesToscan[] = { "com.global.mentorship" };
+	public GroupedOpenApi paymentApi() {
+		String packagesToscan[] = { "com.global.mentorship.payment.controller",
+				
+		};
 		return GroupedOpenApi.builder()
-		                     .group("Mentorship API")
+		                     .group("Payment API")
 							 .packagesToScan(packagesToscan)
 							 .addOperationCustomizer(appTokenHeaderParam())
 							 .build();
 	}
+	
+	@Bean
+	public GroupedOpenApi notificationApi() {
+		String packagesToscan[] = { "com.global.mentorship.notification.controller",
+				
+		};
+		return GroupedOpenApi.builder()
+		                     .group("Notification API")
+							 .packagesToScan(packagesToscan)
+							 .addOperationCustomizer(appTokenHeaderParam())
+							 .build();
+	}
+	
+	@Bean
+	public GroupedOpenApi servicesApi() {
+		String packagesToscan[] = { "com.global.mentorship.videocall.controller",
+				
+		};
+		return GroupedOpenApi.builder()
+		                     .group("Services API")
+							 .packagesToScan(packagesToscan)
+							 .addOperationCustomizer(appTokenHeaderParam())
+							 .build();
+	}
+	
 	
 	@Bean
     public OperationCustomizer appTokenHeaderParam() {

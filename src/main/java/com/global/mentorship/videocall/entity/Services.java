@@ -1,6 +1,6 @@
 package com.global.mentorship.videocall.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,9 +27,9 @@ public class Services extends BaseEntity<Long> {
 	
 	private int duration;
 	
-	private Date startDate;
+	private LocalDateTime startDate;
 	
-	private Date endDate;
+	private LocalDateTime endDate;
 	
 	@OneToMany(mappedBy = "services", 
 			cascade = CascadeType.ALL,

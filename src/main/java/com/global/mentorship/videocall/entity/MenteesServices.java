@@ -1,6 +1,5 @@
 package com.global.mentorship.videocall.entity;
-
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.global.mentorship.base.entity.BaseEntity;
 import com.global.mentorship.user.entity.Mentee;
@@ -25,14 +24,11 @@ public class MenteesServices extends BaseEntity<Long> {
 	
 	private String applicationDetails;
 	
-	private Date avaliableStartDate;
-	
 	private boolean isAccepted;
 	
 	@Lob
 	private String report;
 	
-	private int duration;
 	
 	private int rate;
 	

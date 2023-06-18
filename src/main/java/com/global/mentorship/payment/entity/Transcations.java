@@ -1,6 +1,6 @@
 package com.global.mentorship.payment.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.global.mentorship.base.entity.BaseEntity;
 
@@ -20,6 +20,6 @@ public class Transcations extends BaseEntity<Long> {
 	
 	private int amount;
 	
-	private Date date;
+	private LocalDateTime date;
 
 }
