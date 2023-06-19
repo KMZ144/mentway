@@ -22,7 +22,7 @@ public class ServicesController {
 	
  private final ServicesService servicesService;
 
-	@GetMapping("mentors/{id}")
+	@GetMapping("/review/mentors/{id}")
 	public ResponseEntity<Page<MenteeReviewDto>> findAllReviewsByMentorId(
 			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
