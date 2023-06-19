@@ -11,8 +11,4 @@ import com.global.mentorship.user.entity.Mentor;
 @Mapper(componentModel = "spring")
 public interface MentorMapper extends BaseMapper<Mentor, MentorDto> {
 
-	
-	  default Page<MentorDto> map(Page<Mentor> page) {
-	        return page.map(this::map);
-	    }
 }

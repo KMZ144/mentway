@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import com.global.mentorship.base.repo.BaseRepo;
 import com.global.mentorship.user.dto.MentorDto;
+import com.global.mentorship.user.dto.MentorInfoDto;
 import com.global.mentorship.user.entity.Mentor;
+import com.global.mentorship.videocall.dto.MenteeReviewDto;
 
 @Repository
 public interface MentorRepo extends BaseRepo<Mentor, Long> {
@@ -28,7 +30,14 @@ public interface MentorRepo extends BaseRepo<Mentor, Long> {
 	           "HAVING :rate IS NULL OR AVG(ms.rate) >= :rate ")
 	Page<MentorDto> findAllMentorsWithRating(Double rate ,Long categoryId,String name,Pageable pageable);
 
+	@Query("SELECT NEW com.global.mentorship.user.dto.MentorInfoDto (" +
+	           "AVG(ms.rate), m.id, m.name, m.imgUrl, c.name,m.email,m.coverLetter) " +
+	           "FROM MenteesServices ms " +
+	           "JOIN ms.services s " +
+	           "JOIN s.mentor m " +
+	           "JOIN m.category c " +
+	           "WHERE m.isValid = true AND m.id = :id " +
+	           "GROUP BY m.id ")
+	MentorInfoDto findMentorById(long id);
 	
-	
-	
-}
+	}
