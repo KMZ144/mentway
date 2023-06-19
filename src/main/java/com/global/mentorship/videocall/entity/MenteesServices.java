@@ -29,11 +29,11 @@ public class MenteesServices extends BaseEntity<Long> {
 	@Lob
 	private String report;
 	
-	
 	private int rate;
 	
 	private String uploadedUrl;
 	
 	private String meetingUrl;
 	
+	private LocalDateTime startDate;
 }
