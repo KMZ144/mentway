@@ -1,9 +1,14 @@
+
 package com.global.mentorship.base.mapper;
+import java.util.List;
+
+import org.springframework.data.domain.Page; 
 
 public interface BaseMapper <T,DTO> {
 
 	DTO map (T entity);
 	T unMap (DTO entity);
-	Iterable<DTO> map (Iterable<T> entities );
-	Iterable<T> unMap (Iterable<DTO> DTOs );
+	List<DTO> map (List<T> entities );
+	Page<DTO> map (Page<T> pages);
+	List<T> unMap (List<DTO> DTOs );
 }

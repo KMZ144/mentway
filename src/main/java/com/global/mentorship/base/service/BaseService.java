@@ -1,6 +1,8 @@
 package com.global.mentorship.base.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.global.mentorship.base.entity.BaseEntity;
 import com.global.mentorship.base.repo.BaseRepo;
@@ -19,7 +21,11 @@ public abstract class BaseService<T extends BaseEntity<ID>,ID extends Number> {
 		return baseRepo.findAll();
 	}
 	
-	public T findById(ID id ) {
+	public Page<T> findAll(Pageable pageable) {
+		return baseRepo.findAll(pageable);
+	}
+	
+	public T findById(ID id) {
 		return baseRepo.findById(id).orElseThrow(()->new EntityNotFoundException());
 	}
 	

@@ -1,20 +1,37 @@
 package com.global.mentorship.user.controller;
 
+import org.springframework.data.domain.Page;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.global.mentorship.user.dto.MentorDto;
+import com.global.mentorship.user.service.MentorService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RestController
-@RequestMapping("/api/v1/mentor")
+@RequestMapping("/api/v1/mentors")
+@RequiredArgsConstructor
 public class MentorController {
 	
-	@GetMapping("")
-	public String findAllMentors() {
-		return "allah akbr";
+	
+	private final MentorService mentorService;
 		
+	@GetMapping("")
+	public ResponseEntity<Page<MentorDto>> findAllMentors(
+			@RequestParam(name = "rate", required = false) Double rate,
+			@RequestParam(name = "categoryId", required = false) Long categoryId,
+			@RequestParam(name = "name",required = false) String name,
+			@RequestParam(name = "page", defaultValue = "0") int pageNo
+			,@RequestParam(name = "size" ,defaultValue = "5") int size){
+		return ResponseEntity.ok(mentorService.findAllMentorsWithRating(rate,categoryId,name,pageNo,size));
 	}
-
+	
+	
 	
 }
