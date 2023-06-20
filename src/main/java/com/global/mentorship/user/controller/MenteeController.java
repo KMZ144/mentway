@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.user.dto.MenteeDto;
-import com.global.mentorship.user.entity.Mentee;
 import com.global.mentorship.user.mapper.MenteeMapper;
 import com.global.mentorship.user.service.MenteeService;
 

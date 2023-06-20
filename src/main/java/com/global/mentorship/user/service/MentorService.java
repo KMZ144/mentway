@@ -1,7 +1,6 @@
 package com.global.mentorship.user.service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +10,8 @@ import com.global.mentorship.base.service.BaseService;
 import com.global.mentorship.user.dto.MentorDto;
 import com.global.mentorship.user.dto.MentorInfoDto;
 import com.global.mentorship.user.entity.Mentor;
-import com.global.mentorship.user.mapper.MentorMapper;
 import com.global.mentorship.user.repo.MentorRepo;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 

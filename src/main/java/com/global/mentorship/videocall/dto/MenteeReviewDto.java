@@ -2,8 +2,6 @@ package com.global.mentorship.videocall.dto;
 
 import java.time.LocalDateTime;
 
-import com.global.mentorship.base.dto.BaseDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +24,6 @@ public class MenteeReviewDto   {
 
 	private String details;
 	
-	private LocalDateTime endDate;
 	
 
 }

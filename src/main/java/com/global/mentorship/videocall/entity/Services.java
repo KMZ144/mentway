@@ -12,6 +12,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,15 +23,15 @@ import lombok.Setter;
 @Setter
 public class Services extends BaseEntity<Long> {
 	
+	private String title;
+	
 	private String details;
 	
+	@Min(0)
 	private int price;
 	
+	@Min(0) @Max(3)
 	private int duration;
-	
-	private LocalDateTime startDate;
-	
-	private LocalDateTime endDate;
 	
 	@OneToMany(mappedBy = "services", 
 			cascade = CascadeType.ALL,

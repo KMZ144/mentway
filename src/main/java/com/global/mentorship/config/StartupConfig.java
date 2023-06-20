@@ -1,6 +1,5 @@
 package com.global.mentorship.config;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -14,7 +13,6 @@ import com.global.mentorship.user.entity.Mentor;
 import com.global.mentorship.user.repo.CategoryRepo;
 import com.global.mentorship.user.repo.MenteeRepo;
 import com.global.mentorship.user.repo.MentorRepo;
-import com.global.mentorship.user.service.MenteeService;
 import com.global.mentorship.videocall.entity.MenteesServices;
 import com.global.mentorship.videocall.entity.Services;
 import com.global.mentorship.videocall.repo.MenteesServicesRepo;
@@ -173,32 +171,32 @@ public class StartupConfig implements CommandLineRunner{
 		Services service1 = new Services();
 		service1.setDetails("service details");
 		service1.setDuration(1);
-		service1.setEndDate(LocalDateTime.now().plusDays(3));
+//		service1.setEndDate(LocalDateTime.now().plusDays(3));
 		service1.setMentor(mentorRepo.findById(1L).get());
 		
 		Services service5 = new Services();
 		service5.setDetails("service details 5");
 		service5.setDuration(1);
-		service5.setEndDate(LocalDateTime.now().plusDays(3));
+//		service5.setEndDate(LocalDateTime.now().plusDays(3));
 		service5.setMentor(mentorRepo.findById(2L).get());
 		
 		Services service2 = new Services();
 		service2.setDetails("service details 2");
 		service2.setDuration(1);
-		service2.setEndDate(LocalDateTime.now().plusDays(3));
+//		service2.setEndDate(LocalDateTime.now().plusDays(3));
 		service2.setMentor(mentorRepo.findById(3L).get());
 		
 		Services service3 = new Services();
 		service3.setDetails("service details 3");
 		service3.setDuration(3);
-		service3.setEndDate(LocalDateTime.now().plusDays(1));
+//		service3.setEndDate(LocalDateTime.now().plusDays(1));
 		service3.setMentor(mentorRepo.findById(4L).get());
 		
 		
 		Services service4 = new Services();
 		service4.setDetails("service details 4");
 		service4.setDuration(2);
-		service4.setEndDate(LocalDateTime.now().plusDays(2));
+//		service4.setEndDate(LocalDateTime.now().plusDays(2));
 		service4.setMentor(mentorRepo.findById(5L).get());
 		
 		servicesRepo.saveAll(Arrays.asList(service1,service2,service3,service4,service5));
@@ -209,6 +207,7 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices.setMentee(menteeRepo.findById(7L).get());
 		menteesServices.setServices(servicesRepo.findById(1L).get());
 		menteesServices.setApplicationDetails("mentee application1");
+		menteesServices.setStartDate(LocalDateTime.now().plusDays(2));
 		menteesServices.setMeetingUrl("url");
 		menteesServices.setRate(5);
 		menteesServices.setReport(null);
@@ -222,6 +221,7 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices2.setApplicationDetails("mentee 2 application1");
 		menteesServices2.setMeetingUrl("url");
 		menteesServices2.setRate(3);
+		menteesServices2.setStartDate(LocalDateTime.now().plusDays(1));
 		menteesServices2.setReport(null);
 		menteesServices2.setUploadedUrl("upload url");
 		menteesServices2.setAccepted(true);
@@ -235,6 +235,8 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices3.setReport("report 1");
 		menteesServices3.setUploadedUrl("upload url");
 		menteesServices3.setAccepted(true);
+		menteesServices3.setStartDate(LocalDateTime.now().plusDays(3));
+
 		
 		MenteesServices menteesServices4 = new MenteesServices();
 		menteesServices3.setMentee(menteeRepo.findById(10L).get());
@@ -245,6 +247,7 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices3.setReport(null);
 		menteesServices3.setUploadedUrl("upload url");
 		menteesServices3.setAccepted(true);
+		menteesServices3.setStartDate(LocalDateTime.now().plusHours(5));
 		
 		menteesServicesRepo.saveAll(Arrays.asList(menteesServices,menteesServices2,menteesServices3,menteesServices4));
 		

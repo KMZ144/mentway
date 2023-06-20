@@ -2,7 +2,6 @@ package com.global.mentorship.user.mapper;
 
 
 import org.mapstruct.Mapper;
-import org.springframework.data.domain.Page;
 
 import com.global.mentorship.base.mapper.BaseMapper;
 import com.global.mentorship.user.dto.MentorDto;

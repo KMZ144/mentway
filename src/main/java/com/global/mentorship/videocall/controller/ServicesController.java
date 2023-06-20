@@ -1,19 +1,27 @@
 package com.global.mentorship.videocall.controller;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
+import com.global.mentorship.videocall.dto.MenteeServicesDto;
+import com.global.mentorship.videocall.dto.ServicesDto;
+import com.global.mentorship.videocall.entity.Services;
+import com.global.mentorship.videocall.mapper.ServicesMapper;
+import com.global.mentorship.videocall.service.MenteesServicesService;
 import com.global.mentorship.videocall.service.ServicesService;
 
 import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/services")
@@ -21,12 +29,35 @@ import lombok.RequiredArgsConstructor;
 public class ServicesController {
 	
  private final ServicesService servicesService;
+ 
+ private final MenteesServicesService menteesServicesService;
+ 
+ private final ServicesMapper servicesMapper;
+ 
+ 
+ 	@GetMapping("/mentor/{id}")
+ 	public ResponseEntity<List<ServicesDto>> findServiceByMentorId(@PathVariable long id){
+ 		return ResponseEntity.ok(servicesMapper.map(servicesService.findServicesByMentorId(id)));
+ 	}
 
 	@GetMapping("/review/mentors/{id}")
 	public ResponseEntity<Page<MenteeReviewDto>> findAllReviewsByMentorId(
 			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size){
-		return ResponseEntity.ok(servicesService.findAllReviewsByMentorId(id,page,size));
+		return ResponseEntity.ok(menteesServicesService.findAllReviewsByMentorId(id,page,size));
 	}
+	
+	@PostMapping("")
+	public ResponseEntity<ServicesDto> addService(@RequestBody ServicesDto servicesDto){
+		Services servicesCreated = servicesService.insert(servicesMapper.unMap(servicesDto));
+		return ResponseEntity.status(HttpStatus.CREATED).body(servicesMapper.map(servicesCreated));
+	}
+	
+	@PostMapping("apply/{id}")
+	public ResponseEntity<MenteeServicesDto> requestService(@RequestBody MenteeServicesDto servicesDto,@PathVariable long id){
+		MenteeServicesDto application = menteesServicesService.requestService(servicesDto, id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(application);
+	}
+	
 }

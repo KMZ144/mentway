@@ -1,6 +1,6 @@
 package com.global.mentorship.error;
 
-import java.util.List;
+import java.util.HashMap;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +10,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Error {
 	
-	private final String message;
+	private  String message;
 	
-	private final List<String> details;
+	private  HashMap<String,String> details ;
 	
-	
+	 public void addError(String key, String value) {
+	        if (this.details == null) {
+	            this.details = new HashMap<>();
+	        }
+	        this.details.put(key, value);
+	    }	
 }

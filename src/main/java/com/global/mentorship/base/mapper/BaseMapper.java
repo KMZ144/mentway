@@ -2,7 +2,6 @@
 package com.global.mentorship.base.mapper;
 import java.util.List;
 
-import org.springframework.data.domain.Page; 
 
 public interface BaseMapper <T,DTO> {
 

@@ -1,6 +1,5 @@
 package com.global.mentorship.user.repo;
 
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +10,6 @@ import com.global.mentorship.base.repo.BaseRepo;
 import com.global.mentorship.user.dto.MentorDto;
 import com.global.mentorship.user.dto.MentorInfoDto;
 import com.global.mentorship.user.entity.Mentor;
-import com.global.mentorship.videocall.dto.MenteeReviewDto;
 
 @Repository
 public interface MentorRepo extends BaseRepo<Mentor, Long> {
