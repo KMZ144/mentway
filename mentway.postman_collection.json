@@ -4,7 +4,7 @@
 		"name": "mentway",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26158082",
-		"_collection_link": "https://galactic-sunset-85403.postman.co/workspace/My-Workspace~0640e01f-571f-4d86-8b90-24f13379a28c/collection/26158082-d64de2d4-963f-4d90-b985-fee849b2408e?action=share&creator=26158082&source=collection_link"
+		"_collection_link": "https://web.postman.co/workspace/My-Workspace~0640e01f-571f-4d86-8b90-24f13379a28c/collection/26158082-d64de2d4-963f-4d90-b985-fee849b2408e?source=collection_link"
 	},
 	"item": [
 		{
@@ -233,6 +233,159 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "services",
+			"item": [
+				{
+					"name": "add service",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationDetails\":\"app details test\",\r\n    \"startDate\":\"2023-06-21T02:07:000Z\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"services"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add service",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"title test\",\r\n    \"details\":\"test details\",\r\n    \"duration\":5,\r\n    \"price\":-50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "apply for service",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"applicationDetails\":\"test\",\r\n   \"startDate\":\"2023-06-21T02:07:53.463Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/services/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"services",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add service",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"title test\",\r\n    \"details\":\"test details\",\r\n    \"duration\":5,\r\n    \"price\":-50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "get services by mentor id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/services/mentors/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"services",
+								"mentors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
