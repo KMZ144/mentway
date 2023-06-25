@@ -26,9 +26,4 @@ public class ServicesService extends BaseService<Services, Long> {
 		return servicesRepo.findServicesByMentorId(id);
 	}
 	
-	
-	
-	
-	
-	
 }
