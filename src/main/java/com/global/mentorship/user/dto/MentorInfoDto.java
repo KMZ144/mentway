@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MentorInfoDto {
 	
-	private Double averageRate;
+//	private Double averageRate;
 	private Long id;
 	private String name;
 	private String imgUrl;

@@ -31,6 +31,9 @@ public class MentorService extends BaseService<Mentor, Long> {
 	public MentorInfoDto findMentorById(long id) {
 		return mentorRepo.findMentorById(id);
 	}
-	
+
+	public MentorInfoDto editMentorById(long id) {
+		return null;
+	}
 	
 }

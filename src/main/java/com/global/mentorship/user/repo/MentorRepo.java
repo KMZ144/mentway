@@ -30,16 +30,11 @@ public interface MentorRepo extends BaseRepo<Mentor, Long> {
 
 	
 	@Query("SELECT NEW com.global.mentorship.user.dto.MentorInfoDto (" +
-	           "AVG(ms.rate), m.id, m.name, m.imgUrl, c.name,m.email,m.coverLetter) " +
-	           "FROM MenteesServices ms " +
-	           "JOIN ms.services s " +
-	           "RIGHT JOIN s.mentor m " +
+	           "m.id, m.name, m.imgUrl, c.name,m.email,m.coverLetter) " +
+//	           "JOIN ms.services s " +
+	           "FROM Mentor m " +
 	           "JOIN m.category c " +
-	           "WHERE m.isValid = true AND m.id = :id " +
-	           "GROUP BY m.id ")
+	           "WHERE m.isValid = true AND m.id = :id ")
 	MentorInfoDto findMentorById(long id);
-	
-	
-	
 	
 	}

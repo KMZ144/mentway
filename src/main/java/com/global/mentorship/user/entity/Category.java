@@ -13,7 +13,6 @@ import lombok.Setter;
 public class Category extends BaseEntity<Long> {
 	
 	private String name;
-	
-	
+		
 
 }
