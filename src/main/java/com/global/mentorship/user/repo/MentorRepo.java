@@ -39,4 +39,7 @@ public interface MentorRepo extends BaseRepo<Mentor, Long> {
 	           "GROUP BY m.id ")
 	MentorInfoDto findMentorById(long id);
 	
+	
+	
+	
 	}

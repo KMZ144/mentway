@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import com.global.mentorship.base.repo.BaseRepo;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
+import com.global.mentorship.videocall.dto.UpcomingServicesDto;
 import com.global.mentorship.videocall.entity.MenteesServices;
 
 public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
@@ -20,6 +21,26 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           )
 	Page<MenteeReviewDto> findAllReviewsByMentorId(long id , Pageable pageable);
 
+
+	@Query("SELECT NEW com.global.mentorship.videocall.dto.UpcomingServicesDto (" +
+	           "s.id,ms.meetingUrl,s.duration, m.name, m.imgUrl,s.details) " +
+	           "FROM MenteesServices ms " +
+	           "JOIN ms.services s " +
+	           "JOIN ms.mentee m "+
+	           "JOIN s.mentor me " +
+	           "WHERE me.isValid = true AND ms.startDate > now() AND me.id = :id "
+	           )
+	Page<UpcomingServicesDto> findAllUpcomingSessionsByMentorId(long id , Pageable pageable);
+
+	@Query("SELECT NEW com.global.mentorship.videocall.dto.UpcomingServicesDto (" +
+	           "s.id,ms.meetingUrl,s.duration, me.name, me.imgUrl,s.details) " +
+	           "FROM MenteesServices ms " +
+	           "JOIN ms.services s " +
+	           "JOIN ms.mentee m "+
+	           "JOIN s.mentor me " +
+	           "WHERE me.isValid = true AND ms.startDate > now() AND m.id = :id "
+	           )
+	Page<UpcomingServicesDto> findAllUpcomingSessionsByMenteeId(long id , Pageable pageable);
 
 	
 	List <MenteesServices> findMenteesServicesByServicesId(long id);

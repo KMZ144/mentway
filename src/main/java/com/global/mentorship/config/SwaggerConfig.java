@@ -79,7 +79,7 @@ public class SwaggerConfig {
     public OperationCustomizer appTokenHeaderParam() {
         return (Operation operation, HandlerMethod handlerMethod) -> {
             Parameter headerParameter = new Parameter().in(ParameterIn.HEADER.toString()).required(false).
-                    schema(new StringSchema()._default("app_token_header_default_value")).name("app_token_header").description("App Token Header");
+                    schema(new StringSchema()._default("Bearer ")).name("Bearer ").description("App Token Header");
             operation.addParametersItem(headerParameter);
             return operation;
         };

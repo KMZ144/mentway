@@ -11,6 +11,7 @@ import java.util.List;
 import com.global.mentorship.error.NotAvaliableTimeException;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
+import com.global.mentorship.videocall.dto.UpcomingServicesDto;
 import com.global.mentorship.videocall.entity.MenteesServices;
 import com.global.mentorship.videocall.entity.Services;
 import com.global.mentorship.videocall.mapper.MenteeServicesMapper;
@@ -32,6 +33,16 @@ public class MenteesServicesService {
 		Pageable pageable = PageRequest.of(page, size);
 		return menteesServicesRepo.findAllReviewsByMentorId(id,pageable);
 	}
+	
+	public Page<UpcomingServicesDto> findAllUpcomingSessionsByMentorId(long id , int page,int size){
+		Pageable pageable = PageRequest.of(page, size);
+		return menteesServicesRepo.findAllUpcomingSessionsByMentorId(id, pageable);
+	};
+	
+	public Page<UpcomingServicesDto> findAllUpcomingSessionsByMenteeId(long id , int page,int size){
+		Pageable pageable = PageRequest.of(page, size);
+		return menteesServicesRepo.findAllUpcomingSessionsByMenteeId(id, pageable);
+	};
 	
 	public MenteeServicesDto requestService (MenteeServicesDto application,long id) {
 		if(checkAvaliableTime(application.getStartDate(),id)){

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
 import com.global.mentorship.videocall.dto.ServicesDto;
+import com.global.mentorship.videocall.dto.UpcomingServicesDto;
 import com.global.mentorship.videocall.entity.Services;
 import com.global.mentorship.videocall.mapper.ServicesMapper;
 import com.global.mentorship.videocall.service.MenteesServicesService;
@@ -48,6 +49,26 @@ public class ServicesController {
 		return ResponseEntity.ok(menteesServicesService.findAllReviewsByMentorId(id,page,size));
 	}
 	
+	@GetMapping("/upcoming/mentors/{id}")
+	public ResponseEntity<Page<UpcomingServicesDto>> findAllUpcomingSessionsByMentorId(
+			@PathVariable long id,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size
+			){
+		return ResponseEntity.ok(menteesServicesService.findAllUpcomingSessionsByMentorId(id,page,size));
+	}
+	
+	@GetMapping("/upcoming/mentee/{id}")
+	public ResponseEntity<Page<UpcomingServicesDto>> findAllUpcomingSessionsByMenteeId(
+			@PathVariable long id,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size
+			){
+		return ResponseEntity.ok(menteesServicesService.findAllUpcomingSessionsByMenteeId(id,page,size));
+	}
+
+
+	
 	@PostMapping("")
 	public ResponseEntity<ServicesDto> addService(@RequestBody ServicesDto servicesDto){
 		Services servicesCreated = servicesService.insert(servicesMapper.unMap(servicesDto));
@@ -59,5 +80,7 @@ public class ServicesController {
 		MenteeServicesDto application = menteesServicesService.requestService(servicesDto, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(application);
 	}
+	
+	
 	
 }
