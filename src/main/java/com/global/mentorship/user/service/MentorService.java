@@ -33,8 +33,4 @@ public class MentorService extends BaseService<Mentor, Long> {
 	}
 	
 	
-	
-	
-
-	
 }
