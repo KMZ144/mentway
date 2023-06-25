@@ -48,13 +48,31 @@ public class StartupConfig implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-		insertCategories();
-		insertRoles();
-		insertAdmin();
-		insertMentors();
-		insertMentees();
-		insertServices();
-		insertMenteesServices();
+		if (categoryRepo.count()==0) {
+			insertCategories();
+		}
+		
+		if (rolesRepo.count()==0) {
+			insertRoles();
+		}
+		if (userRepo.count()==0) {
+			insertAdmin();
+		}
+		if (mentorRepo.count()==0) {
+			insertMentors();
+		}
+		
+		if (menteeRepo.count()==0) {
+			insertMentees();
+		}
+		
+		if (servicesRepo.count()==0) {
+			insertServices();
+		}
+		if (menteesServicesRepo.count()==0) {
+			insertMenteesServices();
+		}
+		
 		
 		
 	}

@@ -58,7 +58,7 @@ public class ServicesController {
 		return ResponseEntity.ok(menteesServicesService.findAllUpcomingSessionsByMentorId(id,page,size));
 	}
 	
-	@GetMapping("/upcoming/mentee/{id}")
+	@GetMapping("/upcoming/mentees/{id}")
 	public ResponseEntity<Page<UpcomingServicesDto>> findAllUpcomingSessionsByMenteeId(
 			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
