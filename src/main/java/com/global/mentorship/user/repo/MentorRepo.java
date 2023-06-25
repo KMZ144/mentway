@@ -19,7 +19,7 @@ public interface MentorRepo extends BaseRepo<Mentor, Long> {
 	           "AVG(ms.rate), m.id, m.name, m.imgUrl, c.name) " +
 	           "FROM MenteesServices ms " +
 	           "JOIN ms.services s " +
-	           "JOIN s.mentor m " +
+	           "RIGHT JOIN s.mentor m " +
 	           "JOIN m.category c " +
 	           "WHERE m.isValid = true " +
 	           "AND (:categoryId IS NULL OR c.id =:categoryId) "+
@@ -28,11 +28,12 @@ public interface MentorRepo extends BaseRepo<Mentor, Long> {
 	           "HAVING :rate IS NULL OR AVG(ms.rate) >= :rate ")
 	Page<MentorDto> findAllMentorsWithRating(Double rate ,Long categoryId,String name,Pageable pageable);
 
+	
 	@Query("SELECT NEW com.global.mentorship.user.dto.MentorInfoDto (" +
 	           "AVG(ms.rate), m.id, m.name, m.imgUrl, c.name,m.email,m.coverLetter) " +
 	           "FROM MenteesServices ms " +
 	           "JOIN ms.services s " +
-	           "JOIN s.mentor m " +
+	           "RIGHT JOIN s.mentor m " +
 	           "JOIN m.category c " +
 	           "WHERE m.isValid = true AND m.id = :id " +
 	           "GROUP BY m.id ")

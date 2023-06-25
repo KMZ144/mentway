@@ -43,7 +43,7 @@ public class SecurityConfig  {
 		.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/auth/**").permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET,"api/v1/mentors/**").permitAll())
-		.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET,"api/v1/mentees"))
+		.authorizeHttpRequests(auth -> auth.requestMatchers("swagger-ui/**","v3/api-docs/**").permitAll())
 		.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 		.exceptionHandling(auth -> auth.authenticationEntryPoint(
 				(req,res,ex)->{
