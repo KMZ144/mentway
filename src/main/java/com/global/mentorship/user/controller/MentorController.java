@@ -3,6 +3,7 @@ package com.global.mentorship.user.controller;
 import org.springframework.data.domain.Page;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class MentorController {
 	
 	
 	private final MentorService mentorService;
-		
+	
 	@GetMapping("")
 	public ResponseEntity<Page<MentorDto>> findAllMentors(
 			@RequestParam(name = "rate", required = false) Double rate,

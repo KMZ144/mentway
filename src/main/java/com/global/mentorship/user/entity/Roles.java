@@ -11,5 +11,5 @@ import lombok.Setter;
 @Setter
 public class Roles extends BaseEntity<Long> {
 
-	private String role;
+	private String name;
 }

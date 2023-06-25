@@ -79,15 +79,15 @@ public class StartupConfig implements CommandLineRunner{
 	
 	private void insertRoles() {
 		Roles role1 = new Roles();
-		role1.setRole("MENTOR");
+		role1.setName("MENTOR");
 		rolesRepo.save(role1);
 		
 		Roles role2 = new Roles();
-		role2.setRole("MENTEE");
+		role2.setName("MENTEE");
 		rolesRepo.save(role2);
 		
 		Roles role3 = new Roles();
-		role1.setRole("ADMIN");
+		role3.setName("ADMIN");
 		rolesRepo.save(role3);
 	}
 	
@@ -98,6 +98,7 @@ public class StartupConfig implements CommandLineRunner{
 		admin.setName("admin");
 		admin.setPassword(passwordEncoder.encode("123"));
 		admin.setRoles(Set.of(rolesRepo.findById(3L).get()));
+		System.out.println(rolesRepo.findById(3L).get());
 		userRepo.save(admin);
 	}
 	private void insertMentors() {
@@ -296,15 +297,15 @@ public class StartupConfig implements CommandLineRunner{
 
 		
 		MenteesServices menteesServices4 = new MenteesServices();
-		menteesServices3.setMentee(menteeRepo.findById(11L).get());
-		menteesServices3.setServices(servicesRepo.findById(3L).get());
-		menteesServices3.setApplicationDetails("mentee 3 application1");
-		menteesServices3.setMeetingUrl("url");
-		menteesServices3.setRate(4);
-		menteesServices3.setReport(null);
-		menteesServices3.setUploadedUrl("upload url");
-		menteesServices3.setAccepted(true);
-		menteesServices3.setStartDate(LocalDateTime.now().plusHours(5));
+		menteesServices4.setMentee(menteeRepo.findById(11L).get());
+		menteesServices4.setServices(servicesRepo.findById(3L).get());
+		menteesServices4.setApplicationDetails("mentee 3 application1");
+		menteesServices4.setMeetingUrl("url");
+		menteesServices4.setRate(4);
+		menteesServices4.setReport(null);
+		menteesServices4.setUploadedUrl("upload url");
+		menteesServices4.setAccepted(true);
+		menteesServices4.setStartDate(LocalDateTime.now().plusHours(5));
 		
 		menteesServicesRepo.saveAll(Arrays.asList(menteesServices,menteesServices2,menteesServices3,menteesServices4));
 		

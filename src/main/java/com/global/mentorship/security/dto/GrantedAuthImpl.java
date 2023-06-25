@@ -25,7 +25,7 @@ public class GrantedAuthImpl implements GrantedAuthority{
 	
 	@Override
 	public String getAuthority() {
-		return role.getRole();
+		return role.getName();
 	}
 
 }

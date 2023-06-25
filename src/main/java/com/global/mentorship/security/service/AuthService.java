@@ -4,6 +4,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.global.mentorship.payment.service.PaymentMethodService;
@@ -24,12 +26,12 @@ public class AuthService {
 	private final JWTUtil jwtUtil;
 	
 	public AuthResposne authenticate(String email, String password) {
-			authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+	 authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 			
 			final UserDetailsImpl userDetails =  userDetailsService.loadUserByUsername(email); 
 			final String jwt = jwtUtil.generateToken(userDetails);
 		
-			
+
 			
 			return new AuthResposne(jwt,userDetails.getName(),
 					userDetails.getEmail(),userDetails.getImgUrl()
