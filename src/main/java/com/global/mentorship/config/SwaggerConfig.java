@@ -22,7 +22,7 @@ public class SwaggerConfig {
 		return GroupedOpenApi.builder()
 		                     .group("User Management API")
 							 .packagesToScan(packagesToscan)
-							 .addOperationCustomizer(appTokenHeaderParam())
+//							 .addOperationCustomizer(appTokenHeaderParam())
 							 .build();
 	}
 	
@@ -34,7 +34,7 @@ public class SwaggerConfig {
 		return GroupedOpenApi.builder()
 		                     .group("Payment API")
 							 .packagesToScan(packagesToscan)
-							 .addOperationCustomizer(appTokenHeaderParam())
+//							 .addOperationCustomizer(appTokenHeaderParam())
 							 .build();
 	}
 	
@@ -46,7 +46,7 @@ public class SwaggerConfig {
 		return GroupedOpenApi.builder()
 		                     .group("Notification API")
 							 .packagesToScan(packagesToscan)
-							 .addOperationCustomizer(appTokenHeaderParam())
+//							 .addOperationCustomizer(appTokenHeaderParam())
 							 .build();
 	}
 	
@@ -58,7 +58,7 @@ public class SwaggerConfig {
 		return GroupedOpenApi.builder()
 		                     .group("Services API")
 							 .packagesToScan(packagesToscan)
-							 .addOperationCustomizer(appTokenHeaderParam())
+//							 .addOperationCustomizer(appTokenHeaderParam())
 							 .build();
 	}
 	

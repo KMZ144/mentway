@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -42,5 +43,12 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		
 	}
+	
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<Error> handleBadCredentialsException(BadCredentialsException ex){
+		Error error = new Error("Bad Credntials",new HashMap<>());
+		error.addError("date", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		
+	}	
 }
