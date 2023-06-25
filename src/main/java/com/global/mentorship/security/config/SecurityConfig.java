@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +40,10 @@ public class SecurityConfig  {
 	protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.sessionManagement(
 				session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		.cors(cors -> cors.disable())
 		.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/auth/**").permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET,"api/v1/mentors/**").permitAll())
+		.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET,"api/v1/mentees"))
 		.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 		.exceptionHandling(auth -> auth.authenticationEntryPoint(
 				(req,res,ex)->{
@@ -57,6 +59,19 @@ public class SecurityConfig  {
 	 @Bean
 	    GrantedAuthorityDefaults grantedAuthorityDefaults() {
 	        return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
+	    }
+	 
+	 @Bean
+	    public WebMvcConfigurer corsConfigurer() {
+	        return new WebMvcConfigurer() {
+	            @Override
+	            public void addCorsMappings(CorsRegistry registry) {
+	                registry.addMapping("/**")
+	                        .allowedOrigins("*")
+	                        .allowedMethods("*")
+	                        .allowedHeaders("*");
+	            }
+	        };
 	    }
 	
 	
