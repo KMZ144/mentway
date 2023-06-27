@@ -59,9 +59,8 @@ public class ServicesController {
 		return ResponseEntity.ok(menteesServicesService.findAllReviewsByMentorId(id,page,size));
 	}
 	
-	@GetMapping("/upcoming/mentors")
+	@GetMapping("/upcoming/mentor")
 	public ResponseEntity<Page<UpcomingServicesDto>> findAllUpcomingSessionsByMentorId(
-			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size,
 			Authentication auth
@@ -72,7 +71,6 @@ public class ServicesController {
 	
 	@GetMapping("/upcoming/mentee")
 	public ResponseEntity<Page<UpcomingServicesDto>> findAllUpcomingSessionsByMenteeId(
-			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size,
 			Authentication auth
