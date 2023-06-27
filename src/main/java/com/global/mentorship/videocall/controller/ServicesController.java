@@ -80,8 +80,11 @@ public class ServicesController {
 	}
 	
 	@PostMapping("apply/{id}")
-	public ResponseEntity<MenteeServicesDto> requestService(@RequestBody MenteeServicesDto servicesDto,@PathVariable long id){
-		MenteeServicesDto application = menteesServicesService.requestService(servicesDto, id);
+	public ResponseEntity<MenteeServicesDto> requestService(@RequestBody MenteeServicesDto servicesDto
+			,@PathVariable long id,Authentication auth){
+		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+		System.out.println(user);
+		MenteeServicesDto application = menteesServicesService.requestService(servicesDto, id,user.getId());
 		return ResponseEntity.status(HttpStatus.CREATED).body(application);
 	}
 	

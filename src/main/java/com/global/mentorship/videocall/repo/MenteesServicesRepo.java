@@ -43,5 +43,5 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	Page<UpcomingServicesDto> findAllUpcomingSessionsByMenteeId(long id , Pageable pageable);
 
 	
-	List <MenteesServices> findMenteesServicesByServicesId(long id);
+	List <MenteesServices> findMenteesServicesByServicesIdOrMenteeId(long serviceId,long menteeId);
 }
