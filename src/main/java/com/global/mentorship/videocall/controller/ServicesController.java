@@ -59,22 +59,26 @@ public class ServicesController {
 		return ResponseEntity.ok(menteesServicesService.findAllReviewsByMentorId(id,page,size));
 	}
 	
-	@GetMapping("/upcoming/mentors/{id}")
+	@GetMapping("/upcoming/mentors")
 	public ResponseEntity<Page<UpcomingServicesDto>> findAllUpcomingSessionsByMentorId(
 			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size
+			@RequestParam(defaultValue = "5") int size,
+			Authentication auth
 			){
-		return ResponseEntity.ok(menteesServicesService.findAllUpcomingSessionsByMentorId(id,page,size));
+		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+		return ResponseEntity.ok(menteesServicesService.findAllUpcomingSessionsByMentorId(user.getId(),page,size));
 	}
 	
-	@GetMapping("/upcoming/mentees/{id}")
+	@GetMapping("/upcoming/mentee")
 	public ResponseEntity<Page<UpcomingServicesDto>> findAllUpcomingSessionsByMenteeId(
 			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size
+			@RequestParam(defaultValue = "5") int size,
+			Authentication auth
 			){
-		return ResponseEntity.ok(menteesServicesService.findAllUpcomingSessionsByMenteeId(id,page,size));
+		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+		return ResponseEntity.ok(menteesServicesService.findAllUpcomingSessionsByMenteeId(user.getId(),page,size));
 	}
 
 
