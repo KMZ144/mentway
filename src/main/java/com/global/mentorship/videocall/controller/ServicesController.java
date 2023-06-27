@@ -39,6 +39,13 @@ public class ServicesController {
  private final ServicesMapper servicesMapper;
  
  
+ 	@GetMapping("/{id}")
+ 	public ResponseEntity<ServicesDto> findServiceById(@PathVariable long id){
+ 		return ResponseEntity.ok(servicesMapper.map(servicesService.findById(id)));
+ 	}
+
+ 
+ 
  	@GetMapping("/mentor/{id}")
  	public ResponseEntity<List<ServicesDto>> findServiceByMentorId(@PathVariable long id){
  		return ResponseEntity.ok(servicesMapper.map(servicesService.findServicesByMentorId(id)));
