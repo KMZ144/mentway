@@ -82,7 +82,7 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		 PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
 		 RefundCreateParams params =
 				  RefundCreateParams.builder()
-				  .setPaymentIntent("pi_Aabcxyz01aDfoo")
+				  .setPaymentIntent(paymentIntentId)
 				  .setAmount(amount)
 				  .build();
 				Refund refund = Refund.create(params);
