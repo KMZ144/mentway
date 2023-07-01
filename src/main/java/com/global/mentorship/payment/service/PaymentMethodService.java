@@ -14,6 +14,7 @@ import com.global.mentorship.payment.dto.StripeTokenDto;
 import com.global.mentorship.payment.entity.PaymentMethod;
 import com.global.mentorship.payment.mapper.PaymentMapper;
 import com.global.mentorship.payment.repo.PaymentMethodRepo;
+import com.global.mentorship.security.dto.UserDetailsImpl;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
@@ -51,11 +52,11 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 	
 	
 	
-	public PaymentIntent createToken (StripeTokenDto model) throws StripeException {
+	public PaymentIntent createPayemntIntent (UserDetailsImpl  user) throws StripeException {
 		CustomerCreateParams params =
 				  CustomerCreateParams.builder()
-				  .setEmail("hhh@hh.com")
-				  .setName("test")
+				  .setEmail(user.getEmail())
+				  .setName(user.getName())
 				    .build();
 
 				Customer customer = Customer.create(params);
@@ -65,8 +66,6 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 				    .builder()
 				    .setCustomer(customer.getId())
 				    .setSetupFutureUsage(PaymentIntentCreateParams.SetupFutureUsage.OFF_SESSION)
-				    .setAmount(1099L)
-				    .setCurrency("usd")
 				    .setAutomaticPaymentMethods(
 				      PaymentIntentCreateParams.AutomaticPaymentMethods
 				        .builder()
@@ -75,8 +74,6 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 				    )
 				    .build();
 				PaymentIntent paymentIntent = PaymentIntent.create(params1);
-				
-		 
 		 return paymentIntent;
 	}
 }
