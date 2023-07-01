@@ -10,10 +10,12 @@ import java.util.List;
 
 import com.global.mentorship.error.NoPayemntMethodException;
 import com.global.mentorship.error.NotAvaliableTimeException;
+import com.global.mentorship.error.NotValidPaymentException;
 import com.global.mentorship.payment.repo.PaymentMethodRepo;
 import com.global.mentorship.payment.service.PaymentMethodService;
 import com.global.mentorship.user.entity.Mentee;
 import com.global.mentorship.user.service.MenteeService;
+import com.global.mentorship.user.service.MentorService;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
 import com.global.mentorship.videocall.dto.UpcomingServicesDto;
@@ -36,7 +38,6 @@ public class MenteesServicesService {
 	
 	private final MenteeServicesMapper menteeServicesMapper;
 	
-	private final PaymentMethodService paymentMethodService;
 
 	
 	public Page<MenteeReviewDto> findAllReviewsByMentorId(long id,int page,int size){
@@ -56,7 +57,10 @@ public class MenteesServicesService {
 	
 	public MenteeServicesDto requestService (MenteeServicesDto application
 			,long serviceId, long menteeId) {
-		paymentMethodService.findPaymentMethodsByUserId(menteeId) ;
+
+		if (!menteeService.findById(menteeId).isHasValidPayment()) {
+			throw new NotValidPaymentException("not valid payment method");
+		}
 		
 		
 		if(checkAvaliableServiceTime(application.getStartDate(),serviceId,menteeId)){

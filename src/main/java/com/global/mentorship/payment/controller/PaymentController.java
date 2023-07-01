@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.payment.dto.PaymentMethodDto;
-
+import com.global.mentorship.payment.entity.Transcations;
 import com.global.mentorship.payment.service.PaymentMethodService;
+import com.global.mentorship.payment.service.TranscationsService;
 import com.global.mentorship.security.dto.UserDetailsImpl;
 import com.global.mentorship.user.entity.User;
 import com.stripe.exception.StripeException;
@@ -29,11 +30,6 @@ import lombok.RequiredArgsConstructor;
 public class PaymentController {
 	
 	private final PaymentMethodService paymentMethodService;
-		
-	@GetMapping("/{id}")
-	PaymentMethodDto getPaymentByUserId(@PathVariable long id ) {
-		return paymentMethodService.findPaymentMethodsByUserId(id);
-	}
 	
 	@PostMapping("/create")	
 	ResponseEntity<Map<String,String>> createPayemntIntent(Authentication auth) throws StripeException {

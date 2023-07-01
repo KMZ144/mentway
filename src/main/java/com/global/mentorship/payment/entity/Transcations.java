@@ -3,6 +3,7 @@ package com.global.mentorship.payment.entity;
 import java.time.LocalDateTime;
 
 import com.global.mentorship.base.entity.BaseEntity;
+import com.global.mentorship.user.entity.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,10 +17,9 @@ import lombok.Setter;
 public class Transcations extends BaseEntity<Long> {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private PaymentMethod paymentMethod;
+	private User user;
 	
-	private int amount;
+	private String paymentIntentId;  
 	
-	private LocalDateTime date;
 
 }

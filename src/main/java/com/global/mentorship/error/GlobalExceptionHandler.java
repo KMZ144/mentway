@@ -8,6 +8,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.stripe.exception.StripeException;
+
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -75,4 +77,20 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		
 	}
+	
+	@ExceptionHandler(StripeException.class)
+	public ResponseEntity<Error> handleStripeException(StripeException ex){
+		Error error = new Error("Stripe Exception",new HashMap<>());
+		error.addError("payment", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(NotValidPaymentException.class)
+	public ResponseEntity<Error> handleNotValidPaymentException(NotValidPaymentException ex){
+		Error error = new Error("Stripe Exception",new HashMap<>());
+		error.addError("payment", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	
 }

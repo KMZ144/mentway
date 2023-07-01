@@ -3,6 +3,7 @@ package com.global.mentorship.payment.service;
 import com.global.mentorship.base.service.BaseService;
 import com.global.mentorship.error.NoPayemntMethodException;
 import com.global.mentorship.error.PaymentMethodAlreadyExist;
+import com.global.mentorship.notification.service.EmailService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +45,10 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 	private final PaymentMapper paymentMapper;
 
+	private final EmailService mailService;
+	
+	private final TranscationsService transcationsService;
+
 	private final UserService userService;
 
 	@Value("${stripe.secret}")
@@ -54,19 +59,17 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		Stripe.apiKey = stripeSecret;
 	}
 
-	public PaymentMethodDto findPaymentMethodsByUserId(long id) {
-		PaymentMethod paymentMethod = paymentMethodRepo.findByUserId(id)
-				.orElseThrow(() -> new NoPayemntMethodException("no payment method provided please add new one "));
-		return paymentMapper.map(paymentMethod);
-	}
 	
 	public User setValidPayemntMethod(long id,String paymentIntentId) throws StripeException {
 		User user =  userService.findById(id);
 		user.setHasValidPayment(true);
 		Refund refund =  refundWithPaymentIntent(paymentIntentId,100L);
 		userService.update(user);
+		mailService.sendEmail(user.getEmail(), "Payemnt Method Verification ", "Your Payment Method has successfully verfied");
 		return user;
 	}
+	
+	
 
 	public PaymentIntent createPayemntMethod(long id) throws StripeException {
 		User user = userService.findById(id);
