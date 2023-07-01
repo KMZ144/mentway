@@ -33,4 +33,6 @@ public  class User extends BaseEntity<Long> {
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Roles> roles;
+	
+	private String stripeId;
 }

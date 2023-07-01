@@ -3,6 +3,8 @@ package com.global.mentorship.videocall.repo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 import com.global.mentorship.base.repo.BaseRepo;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
@@ -38,8 +40,9 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "JOIN ms.services s " +
 	           "JOIN ms.mentee m "+
 	           "JOIN s.mentor me " +
-	           "WHERE me.isValid = true AND ms.status = ACCEPTED AND ms.startDate > now() AND m.id = :id "
+	           "WHERE me.isValid = true AND ms.status = ACCEPTED AND (ms.startDate > now() OR ms.startDate > now()+s.duration)  AND m.id = :id "
 	           )
+	
 	Page<UpcomingServicesDto> findAllUpcomingSessionsByMenteeId(long id , Pageable pageable);
 
 	

@@ -59,4 +59,12 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
 		
 	}
+	
+	@ExceptionHandler(NoPayemntMethodException.class)
+	public ResponseEntity<Error> handleNoPaymentException(NoPayemntMethodException ex){
+		Error error = new Error("no payment",new HashMap<>());
+		error.addError("payment", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		
+	}
 }
