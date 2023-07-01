@@ -63,7 +63,7 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 	public User setValidPayemntMethod(long id,String paymentIntentId) throws StripeException {
 		User user =  userService.findById(id);
 		user.setHasValidPayment(true);
-		Refund refund =  refundWithPaymentIntent(paymentIntentId,1000L);
+		Refund refund =  refundWithPaymentIntent(paymentIntentId,100L);
 		userService.update(user);
 		return user;
 	}
