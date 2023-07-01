@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +46,6 @@ public class SecurityConfig  {
 		httpSecurity.sessionManagement(
 				session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.csrf(csrf -> csrf.disable())
-		.cors(cors-> cors.configurationSource(corsConfigurationSource()))
 		.authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/auth/**").permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET,"api/v1/mentors/**").permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers("swagger-ui/**","v3/api-docs/**").permitAll())
@@ -66,15 +67,13 @@ public class SecurityConfig  {
 	    }
 	 	 
 	 
-		@Bean
-		public CorsConfigurationSource corsConfigurationSource() {
-			CorsConfiguration configuration = new CorsConfiguration();
-			configuration.setAllowedOrigins(Arrays.asList("*"));
-			configuration.setAllowedMethods(Arrays.asList("*"));
-			UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-			source.registerCorsConfiguration("/**", configuration);
-			return  source;
-		}
-	
-		
+	 @Bean
+		public WebMvcConfigurer corsConfigurer() {
+			return new WebMvcConfigurer() {
+				@Override
+				public void addCorsMappings(CorsRegistry registry) {
+					registry.addMapping("**/**").allowedOrigins("http://localhost:4200");
+				}
+			};
+		}	
 }
