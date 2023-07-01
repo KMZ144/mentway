@@ -1,6 +1,7 @@
 package com.global.mentorship.payment.controller;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,10 +35,10 @@ public class PaymentController {
 	}
 	
 	@PostMapping("/create")	
-	String createPayemntIntent(Authentication auth) throws StripeException {
+	ResponseEntity<String> createPayemntIntent(Authentication auth) throws StripeException {
 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
 		 PaymentIntent pt =  paymentMethodService.createPayemntIntent(user);
-		 return pt.getClientSecret();
+		 return ResponseEntity.ok(pt.getClientSecret());
 	}
 	
 }
