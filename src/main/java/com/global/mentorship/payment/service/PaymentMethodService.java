@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.global.mentorship.payment.dto.PaymentMethodDto;
-import com.global.mentorship.payment.dto.StripeTokenDto;
 import com.global.mentorship.payment.entity.PaymentMethod;
 import com.global.mentorship.payment.mapper.PaymentMapper;
 import com.global.mentorship.payment.repo.PaymentMethodRepo;
@@ -47,7 +46,7 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 	private final EmailService mailService;
 	
-	private final TranscationsService transcationsService;
+//	private final TranscationsService transcationsService;
 
 	private final UserService userService;
 
@@ -65,7 +64,9 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		user.setHasValidPayment(true);
 		Refund refund =  refundWithPaymentIntent(paymentIntentId,100L);
 		userService.update(user);
-		mailService.sendEmail(user.getEmail(), "Payemnt Method Verification ", "Your Payment Method has successfully verfied");
+		mailService.sendEmail(user.getEmail(), 
+				"Payemnt Method Verification ",
+				"Your Payment Method has successfully verfied");
 		return user;
 	}
 	
