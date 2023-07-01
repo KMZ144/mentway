@@ -1,6 +1,9 @@
 package com.global.mentorship.payment.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,10 +38,12 @@ public class PaymentController {
 	}
 	
 	@PostMapping("/create")	
-	ResponseEntity<String> createPayemntIntent(Authentication auth) throws StripeException {
+	ResponseEntity<Map<String,String>> createPayemntIntent(Authentication auth) throws StripeException {
 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
 		 PaymentIntent pt =  paymentMethodService.createPayemntIntent(user);
-		 return ResponseEntity.ok(pt.getClientSecret());
+		 Map<String, String> map = new HashMap<>();
+		 map.put("clientSecret", pt.getClientSecret());
+		 return ResponseEntity.ok(map);
 	}
 	
 }
