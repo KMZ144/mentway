@@ -20,6 +20,7 @@ import com.global.mentorship.user.repo.RolesRepo;
 import com.global.mentorship.user.repo.UserRepo;
 import com.global.mentorship.videocall.entity.MenteesServices;
 import com.global.mentorship.videocall.entity.Services;
+import com.global.mentorship.videocall.entity.Status;
 import com.global.mentorship.videocall.repo.MenteesServicesRepo;
 import com.global.mentorship.videocall.repo.ServicesRepo;
 
@@ -288,7 +289,7 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices.setRate(5);
 		menteesServices.setReport(null);
 		menteesServices.setUploadedUrl("upload url");
-		menteesServices.setAccepted(true);
+		menteesServices.setStatus(Status.ACCEPTED);
 		
 		
 		MenteesServices menteesServices2 = new MenteesServices();
@@ -300,7 +301,7 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices2.setStartDate(LocalDateTime.now().plusDays(1));
 		menteesServices2.setReport(null);
 		menteesServices2.setUploadedUrl("upload url");
-		menteesServices2.setAccepted(true);
+		menteesServices2.setStatus(Status.PENDINNG);
 		
 		MenteesServices menteesServices3 = new MenteesServices();
 		menteesServices3.setMentee(menteeRepo.findById(10L).get());
@@ -310,7 +311,7 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices3.setRate(2);
 		menteesServices3.setReport("report 1");
 		menteesServices3.setUploadedUrl("upload url");
-		menteesServices3.setAccepted(true);
+		menteesServices3.setStatus(Status.REJECTED);
 		menteesServices3.setStartDate(LocalDateTime.now().plusDays(3));
 
 		
@@ -322,7 +323,7 @@ public class StartupConfig implements CommandLineRunner{
 		menteesServices4.setRate(4);
 		menteesServices4.setReport(null);
 		menteesServices4.setUploadedUrl("upload url");
-		menteesServices4.setAccepted(true);
+		menteesServices4.setStatus(Status.ACCEPTED);
 		menteesServices4.setStartDate(LocalDateTime.now().plusHours(5));
 		
 		menteesServicesRepo.saveAll(Arrays.asList(menteesServices,menteesServices2,menteesServices3,menteesServices4));

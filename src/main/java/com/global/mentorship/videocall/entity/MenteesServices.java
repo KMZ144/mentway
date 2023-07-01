@@ -6,6 +6,8 @@ import com.global.mentorship.user.entity.Mentee;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
@@ -27,8 +29,9 @@ public class MenteesServices extends BaseEntity<Long> {
 	
 	private String applicationDetails;
 	
-	@Column(columnDefinition = "boolean default false")
-	private boolean isAccepted;
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "CHECK (status IN ('PENDING', 'ACCEPTED' , 'REJECTED')")
+	private Status status;
 	
 	@Lob
 	private String report;
@@ -42,3 +45,5 @@ public class MenteesServices extends BaseEntity<Long> {
 	
 	private LocalDateTime startDate;
 }
+
+

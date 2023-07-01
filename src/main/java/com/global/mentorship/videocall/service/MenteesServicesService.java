@@ -8,7 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+import com.global.mentorship.error.NoPayemntMethodException;
 import com.global.mentorship.error.NotAvaliableTimeException;
+import com.global.mentorship.payment.repo.PaymentMethodRepo;
+import com.global.mentorship.payment.service.PaymentMethodService;
+import com.global.mentorship.user.entity.Mentee;
+import com.global.mentorship.user.service.MenteeService;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
 import com.global.mentorship.videocall.dto.UpcomingServicesDto;
@@ -24,10 +29,15 @@ import lombok.RequiredArgsConstructor;
 public class MenteesServicesService {
 	
 	private final ServicesService servicesService;
+	
+	private final MenteeService menteeService;
 
 	private final MenteesServicesRepo menteesServicesRepo;
 	
 	private final MenteeServicesMapper menteeServicesMapper;
+	
+	private final PaymentMethodService paymentMethodService;
+
 	
 	public Page<MenteeReviewDto> findAllReviewsByMentorId(long id,int page,int size){
 		Pageable pageable = PageRequest.of(page, size);
@@ -44,28 +54,38 @@ public class MenteesServicesService {
 		return menteesServicesRepo.findAllUpcomingSessionsByMenteeId(id, pageable);
 	};
 	
-	public MenteeServicesDto requestService (MenteeServicesDto application,long id) {
-		if(checkAvaliableTime(application.getStartDate(),id)){
+	public MenteeServicesDto requestService (MenteeServicesDto application
+			,long serviceId, long menteeId) {
+		paymentMethodService.findPaymentMethodsByUserId(menteeId) ;
+		
+		
+		if(checkAvaliableServiceTime(application.getStartDate(),serviceId,menteeId)){
 			MenteesServices menteeServices = menteeServicesMapper.unMap(application);
-			Services services = servicesService.findById(id);
+			Services services = servicesService.findById(serviceId);
+			Mentee mentee = menteeService.findById(menteeId);
 			menteeServices.setServices(services);
-			 System.out.println( menteesServicesRepo.save(menteeServices).getStartDate());
-			 
+			menteeServices.setMentee(mentee);
+			menteesServicesRepo.save(menteeServices);
 			 return application;
 		}
 		else throw new NotAvaliableTimeException("not avaliable time please choose another time");
 		
 	}
 	
-	private boolean checkAvaliableTime(LocalDateTime dateTime,long id) {
-		List<MenteesServices> menteesServices = menteesServicesRepo.findMenteesServicesByServicesId(id);
-		int duration  = menteesServices.get(0).getServices().getDuration();
+	
+	
+	private boolean checkAvaliableServiceTime(LocalDateTime dateTime,long serviceId,long menteeId) {
+		List<MenteesServices> menteesServices = menteesServicesRepo.findMenteesServicesByServicesIdOrMenteeId(serviceId,menteeId);
 		LocalDateTime dateTimeApplication;
 		for (MenteesServices application : menteesServices) {
 			 dateTimeApplication = application.getStartDate();
-			 System.out.println(dateTimeApplication);
-			if((dateTime.isAfter(dateTimeApplication) && dateTime.isBefore(dateTimeApplication.plusHours(duration)))
-					|| dateTime.isEqual(dateTimeApplication) ) {
+			 int duration = application.getServices().getDuration();
+			if((dateTime.isAfter(dateTimeApplication)
+					&& dateTime.isBefore(dateTimeApplication.plusHours(duration)))
+					|| dateTime.isEqual(dateTimeApplication)
+					|| (dateTime.isAfter(dateTimeApplication.minusHours(duration)) 
+							&& dateTime.isBefore(dateTimeApplication))
+					) {
 				return false;		
 			}
 		}

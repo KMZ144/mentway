@@ -14,6 +14,7 @@ public class UpcomingServicesDto {
 	private long serviceId;
 	private String meetingUrl;
 	private int duration;
+	private long id;
 	private String name;
 	private String imgUrl;
 	private String serviceDetails; 

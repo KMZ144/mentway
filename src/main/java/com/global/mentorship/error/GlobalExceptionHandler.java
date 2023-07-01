@@ -50,5 +50,21 @@ public class GlobalExceptionHandler {
 		error.addError("date", ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		
-	}	
+	}
+	
+	@ExceptionHandler(NotValidMentorException.class)
+	public ResponseEntity<Error> handleBadCredentialsException(NotValidMentorException ex){
+		Error error = new Error("not valid mentor",new HashMap<>());
+		error.addError("vadility", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+		
+	}
+	
+	@ExceptionHandler(NoPayemntMethodException.class)
+	public ResponseEntity<Error> handleNoPaymentException(NoPayemntMethodException ex){
+		Error error = new Error("no payment",new HashMap<>());
+		error.addError("payment", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		
+	}
 }
