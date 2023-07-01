@@ -61,19 +61,21 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 				Customer customer = Customer.create(params);
 		
-		PaymentIntentCreateParams params1 =
-				  PaymentIntentCreateParams
-				    .builder()
-				    .setCustomer(customer.getId())
-				    .setSetupFutureUsage(PaymentIntentCreateParams.SetupFutureUsage.OFF_SESSION)
-				    .setAutomaticPaymentMethods(
-				      PaymentIntentCreateParams.AutomaticPaymentMethods
-				        .builder()
-				        .setEnabled(true)
-				        .build()
-				    )
-				    .build();
-				PaymentIntent paymentIntent = PaymentIntent.create(params1);
+				PaymentIntentCreateParams params1 =
+						  PaymentIntentCreateParams
+						    .builder()
+						    .setCustomer(customer.getId())
+						    .setSetupFutureUsage(PaymentIntentCreateParams.SetupFutureUsage.OFF_SESSION)
+						    .setAmount(1099L)
+						    .setCurrency("usd")
+						    .setAutomaticPaymentMethods(
+						      PaymentIntentCreateParams.AutomaticPaymentMethods
+						        .builder()
+						        .setEnabled(true)
+						        .build()
+						    )
+						    .build();
+		PaymentIntent paymentIntent = PaymentIntent.create(params1);		
 		 return paymentIntent;
 	}
 }
