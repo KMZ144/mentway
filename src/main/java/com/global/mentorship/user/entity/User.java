@@ -35,4 +35,7 @@ public  class User extends BaseEntity<Long> {
 	private Set<Roles> roles;
 	
 	private String stripeId;
+	
+	@Column(columnDefinition = "boolean default false")
+	private boolean hasValidPayment;
 }

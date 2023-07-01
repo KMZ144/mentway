@@ -36,7 +36,8 @@ public class AuthService {
 			return new AuthResposne(jwt,userDetails.getName(),
 					userDetails.getEmail(),userDetails.getImgUrl()
 					, userDetails.getId(), userDetails.getAuthorities()
-					.stream().map(authz ->authz.getAuthority()).collect(Collectors.toList()));
+					.stream().map(authz ->authz.getAuthority()).collect(Collectors.toList()),
+					userDetails.isHasPayment());
 	}
 
 }

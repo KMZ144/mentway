@@ -67,4 +67,12 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		
 	}
+	
+	@ExceptionHandler(PaymentMethodAlreadyExist.class)
+	public ResponseEntity<Error> handlePaymentMethodAlreadyExist(PaymentMethodAlreadyExist ex){
+		Error error = new Error("payment",new HashMap<>());
+		error.addError("payment", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		
+	}
 }

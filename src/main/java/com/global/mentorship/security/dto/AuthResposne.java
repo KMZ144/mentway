@@ -25,5 +25,7 @@ public class AuthResposne {
 	private long id;
 	
 	private Collection<String> authorities;
+	
+	private boolean hasValidPaymentMethod;
 
 }
