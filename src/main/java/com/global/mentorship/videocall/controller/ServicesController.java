@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import com.global.mentorship.videocall.entity.Services;
 import com.global.mentorship.videocall.mapper.ServicesMapper;
 import com.global.mentorship.videocall.service.MenteesServicesService;
 import com.global.mentorship.videocall.service.ServicesService;
+import com.stripe.exception.StripeException;
 
 import lombok.RequiredArgsConstructor;
 import java.util.List;
@@ -96,6 +98,14 @@ public class ServicesController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(application);
 	}
 	
-	
+	@PatchMapping("/{serviceId}/mentee/{menteeid}")
+	public ResponseEntity<MenteeServicesDto> changeServiceStatus(@RequestParam String status
+			,@PathVariable(name = "serviceId") long serviceId,
+			@PathVariable(name = "menteeeId") long menteeId,
+			Authentication auth) throws StripeException{
+		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+		MenteeServicesDto application = menteesServicesService.changeApplicationStatus(serviceId, menteeId,status);
+		return ResponseEntity.status(HttpStatus.CREATED).body(application);
+	}
 	
 }

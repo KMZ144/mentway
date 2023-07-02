@@ -47,4 +47,6 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 
 	
 	List <MenteesServices> findMenteesServicesByServicesIdOrMenteeId(long serviceId,long menteeId);
+	
+	MenteesServices findByServicesIdAndMenteeId(long serviceId,long menteeId);
 }

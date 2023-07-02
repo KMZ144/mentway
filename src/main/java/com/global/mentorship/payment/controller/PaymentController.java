@@ -7,16 +7,13 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.global.mentorship.payment.dto.PaymentMethodDto;
 import com.global.mentorship.payment.service.PaymentMethodService;
 import com.global.mentorship.security.dto.UserDetailsImpl;
-import com.global.mentorship.user.entity.User;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 
