@@ -109,12 +109,13 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		PaymentIntentCreateParams params =
 				  PaymentIntentCreateParams.builder()
 				    .setCurrency("usd")
-				    .setAmount(amount)
+				    .setAmount(amount*100)
 				    .setAutomaticPaymentMethods(
 				      PaymentIntentCreateParams.AutomaticPaymentMethods.builder().setEnabled(true).build()
 				    )
 				    .setPaymentMethod(PaymentMethodId)
 				    .setCustomer(customerId)
+					.setReturnUrl("http://locahost:4200/mentor/dashboard")
 				    .setConfirm(true)
 				    .setOffSession(true)
 				    .build();
