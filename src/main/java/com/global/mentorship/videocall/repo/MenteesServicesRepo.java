@@ -58,9 +58,9 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "FROM MenteesServices ms " +
 	           "JOIN ms.services s " +
 	           "JOIN s.mentor me " +
-	           "WHERE me.isValid = true  AND me.id = :id AND ms.status = PENDING "
+	           "WHERE me.isValid = true  AND me.id = :id AND ms.status in (:statusList) "
 	           )
-	Page<MenteeServicesDto> findMenteesServicesByMentorId(long id, Pageable pageable);
+	Page<MenteeServicesDto> findMenteesServicesByMentorId(long id, Pageable pageable , List<String> statusList);
 	
 	
 	@Query("SELECT NEW com.global.mentorship.videocall.dto.MenteeApplicationsDto (" +
@@ -69,8 +69,8 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           + "ms.services.mentor.id,ms.services.mentor.name,ms.services.mentor.imgUrl,"
 	           + "ms.services.mentor.category.name )" +
 	           "FROM MenteesServices ms " +
-	           "WHERE  ms.mentee.id = :id AND ms.status IN (PENDING , REJECTED)   "
+	           "WHERE  ms.mentee.id = :id AND (ms.status in :statusList )   "
 	           )
-	Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id, Pageable pageable);
+	Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id, Pageable pageable,List<String> statusList );
 
 }

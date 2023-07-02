@@ -151,9 +151,6 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		return paymentIntent;
 	}
 	
-	
-	
-	
 
 	private Customer createCustomer(User user) throws StripeException {
 		CustomerCreateParams params = CustomerCreateParams.builder().setEmail(user.getEmail()).setName(user.getName())

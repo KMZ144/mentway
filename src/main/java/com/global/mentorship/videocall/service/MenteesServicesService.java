@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,13 +55,13 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 	
 	public Page<MenteeServicesDto> findMenteesServicesByMentorId(long id ,int page , int size ){
 		Pageable pageable = PageRequest.of(page, size);
-		 return menteesServicesRepo.findMenteesServicesByMentorId(id, pageable);
+		 return menteesServicesRepo.findMenteesServicesByMentorId(id, pageable ,Arrays.asList(Status.PENDINNG.toString()));
 		 
 	}
 	
 	public Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id ,int page , int size ){
 		Pageable pageable = PageRequest.of(page, size);
-		 return menteesServicesRepo.findMenteesServicesByMenteeId(id, pageable);
+		 return menteesServicesRepo.findMenteesServicesByMenteeId(id, pageable,Arrays.asList(Status.PENDINNG.toString(),Status.REJECTED.toString()));
 		 
 	}
 
