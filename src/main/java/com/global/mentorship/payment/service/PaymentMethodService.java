@@ -146,6 +146,7 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		PaymentIntent paymentIntent = createPayemntIntent(customer);
 		Transcations transcations = new Transcations();
 		transcations.setPaymentIntentId(paymentIntent.getId());
+		transcations.setUser(user);
 		transcationsService.insert(transcations);
 		return paymentIntent;
 	}

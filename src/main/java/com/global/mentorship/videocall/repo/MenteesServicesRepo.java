@@ -58,7 +58,7 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "FROM MenteesServices ms " +
 	           "JOIN ms.services s " +
 	           "JOIN s.mentor me " +
-	           "WHERE me.isValid = true  AND me.id = :id "
+	           "WHERE me.isValid = true  AND me.id = :id AND ms.status = PENDING "
 	           )
 	Page<MenteeServicesDto> findMenteesServicesByMentorId(long id, Pageable pageable);
 	
@@ -69,7 +69,7 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           + "ms.services.mentor.id,ms.services.mentor.name,ms.services.mentor.imgUrl,"
 	           + "ms.services.mentor.category.name )" +
 	           "FROM MenteesServices ms " +
-	           "WHERE  ms.mentee.id = :id "
+	           "WHERE  ms.mentee.id = :id AND ms.status IN (PENDING , REJECTED)   "
 	           )
 	Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id, Pageable pageable);
 
