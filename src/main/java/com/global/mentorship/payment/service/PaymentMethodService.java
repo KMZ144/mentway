@@ -24,14 +24,18 @@ import com.global.mentorship.user.service.UserService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
+import com.stripe.model.AccountLink;
 import com.stripe.model.Charge;
 import com.stripe.model.Customer;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.PaymentMethodCollection;
 import com.stripe.model.Refund;
 import com.stripe.model.Token;
+import com.stripe.model.Topup;
+import com.stripe.model.Transfer;
 import com.stripe.net.RequestOptions;
 import com.stripe.param.AccountCreateParams;
+import com.stripe.param.AccountLinkCreateParams;
 import com.stripe.param.CustomerCreateParams;
 import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.PaymentMethodCreateParams;
@@ -39,6 +43,7 @@ import com.stripe.param.PaymentMethodCreateParams.CardDetails;
 import com.stripe.param.PaymentMethodListParams;
 import com.stripe.param.ProductCreateParams.Type;
 import com.stripe.param.RefundCreateParams;
+import com.stripe.param.TopupCreateParams;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -92,8 +97,47 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 				user.setStripeId(account.getId());
 	}
 	
-	public void payMentorForService(String customerId,long amount) {
+	public void payMentorForService(User user,long amount) throws StripeException {
+		AccountCreateParams params =
+				  AccountCreateParams.builder()
+				  .setEmail("kareem@gmail.com")
+				  .setType(AccountCreateParams.Type.EXPRESS).build();
 		
+				Account account = Account.create(params);
+				user.setStripeId(account.getId());
+				userService.update(user);
+				
+				
+				AccountLinkCreateParams params1 =
+						  AccountLinkCreateParams.builder()
+						    .setAccount(account.getId())
+						    .setRefreshUrl("https://example.com/reauth")
+						    .setReturnUrl("http://localhost:4200")
+						    .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+						    .build();
+				AccountLink accountLink = AccountLink.create(params1);
+				accountLink.getUrl();
+				System.out.println(accountLink);
+
+				
+				
+//				TopupCreateParams params2 =
+//						  TopupCreateParams.builder()
+//						    .setAmount(2000L)
+//						    .setCurrency("usd")
+//						    .setDescription("Top-up for week of May 31")
+//						    .setStatementDescriptor("Weekly top-up")
+//						    .build();
+//
+//						Topup topup = Topup.create(params2);
+//						
+//						Map<String, Object> params3 = new HashMap<>();
+//						params3.put("amount", 1000);
+//						params3.put("currency", "usd");
+//						params3.put("destination", "{{CONNECTED_STRIPE_ACCOUNT_ID}}");
+//						Transfer transfer = Transfer.create(params3);
+						
+
 	}
 	
 	public void payForService(String customerId,long amount) throws StripeException {
@@ -116,7 +160,9 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 				    .setPaymentMethod(PaymentMethodId)
 				    .setCustomer(customerId)
 				    .setConfirm(true)
+				    .setReturnUrl("http://localhost:4200")
 				    .setOffSession(true)
+				    
 				    .build();
 				
 				 PaymentIntent paymentIntent =  PaymentIntent.create(params);

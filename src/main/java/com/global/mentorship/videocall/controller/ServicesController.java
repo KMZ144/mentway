@@ -75,10 +75,11 @@ public class ServicesController {
 
 	@GetMapping("/review/mentors/{id}")
 	public ResponseEntity<Page<MenteeReviewDto>> findAllReviewsByMentorId(
-			@PathVariable long id,
 			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size){
-		return ResponseEntity.ok(menteesServicesService.findAllReviewsByMentorId(id,page,size));
+			@RequestParam(defaultValue = "5") int size,
+			Authentication auth){
+ 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+		return ResponseEntity.ok(menteesServicesService.findAllReviewsByMentorId(user.getId(),page,size));
 	}
 	
 	@GetMapping("/upcoming/mentor")

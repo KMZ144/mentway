@@ -102,7 +102,7 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 		Services  services = app.getServices();
 		String customerId = services.getMentor().getStripeId();
 		long amount = services.getPrice();
-		paymentMethodService.payMentorForService(customerId,amount);
+//		paymentMethodService.payMentorForService(customerId,amount);
 
 	}
 

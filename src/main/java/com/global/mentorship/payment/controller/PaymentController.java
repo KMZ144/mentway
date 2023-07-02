@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.global.mentorship.payment.service.PaymentMethodService;
 import com.global.mentorship.security.dto.UserDetailsImpl;
 import com.stripe.exception.StripeException;
+import com.stripe.model.AccountLink;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.checkout.Session;
+import com.stripe.param.billingportal.SessionCreateParams;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +45,43 @@ public class PaymentController {
 		 Map<String, Boolean> map = new HashMap<>();
 		 map.put("valid", true);
 		 return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping("/mentor")
+	public AccountLink paymentor(Authentication auth) throws StripeException {
+		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+		
+		return paymentMethodService.payMentorForService(null, 0L);
+		 
+	}
+	
+	@GetMapping("/checkout")
+	public void checkOut() throws StripeException {
+		com.stripe.param.checkout.SessionCreateParams params =
+				  com.stripe.param.checkout.SessionCreateParams.builder()
+				    .setMode(com.stripe.param.checkout.SessionCreateParams.Mode.PAYMENT)
+				    .addLineItem(
+				      com.stripe.param.checkout.SessionCreateParams.LineItem.builder()
+				        .setPrice("{{PRICE_ID}}")
+				        .setQuantity(1L)
+				        .build()
+				    )
+				    .setPaymentIntentData(
+				      com.stripe.param.checkout.SessionCreateParams.PaymentIntentData.builder()
+				        .setApplicationFeeAmount(123L)
+				        .setTransferData(
+				          com.stripe.param.checkout.SessionCreateParams.PaymentIntentData.TransferData.builder()
+				            .setDestination("{{CONNECTED_ACCOUNT_ID}}")
+				            .build()
+				        )
+				        .build()
+				    )
+				    .setSuccessUrl("https://example.com/success")
+				    .setCancelUrl("https://example.com/cancel")
+				    .build();
+
+				Session session = Session.create(params);
+
 	}
 	
 }
