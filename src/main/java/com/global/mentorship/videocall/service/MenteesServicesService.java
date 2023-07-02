@@ -17,6 +17,7 @@ import com.global.mentorship.payment.service.PaymentMethodService;
 import com.global.mentorship.user.entity.Mentee;
 import com.global.mentorship.user.entity.Mentor;
 import com.global.mentorship.user.service.MenteeService;
+import com.global.mentorship.videocall.dto.MenteeApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
 import com.global.mentorship.videocall.dto.UpcomingServicesDto;
@@ -49,6 +50,18 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 		Pageable pageable = PageRequest.of(page, size);
 		return menteesServicesRepo.findAllReviewsByMentorId(id, pageable);
 	}
+	
+	public Page<MenteeServicesDto> findMenteesServicesByMentorId(long id ,int page , int size ){
+		Pageable pageable = PageRequest.of(page, size);
+		 return menteesServicesRepo.findMenteesServicesByMentorId(id, pageable);
+		 
+	}
+	
+	public Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id ,int page , int size ){
+		Pageable pageable = PageRequest.of(page, size);
+		 return menteesServicesRepo.findMenteesServicesByMenteeId(id, pageable);
+		 
+	}
 
 	public Page<UpcomingServicesDto> findAllUpcomingSessionsByMentorId(long id, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
@@ -71,6 +84,7 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 			Mentee mentee = menteeService.findById(menteeId);
 			menteeServices.setServices(services);
 			menteeServices.setMentee(mentee);
+			menteeServices.setStatus(Status.PENDINNG);
 			menteesServicesRepo.save(menteeServices);
 			Mentor mentor = services.getMentor();
 			mailService.sendEmail(mentor, "Application for Service " + services.getTitle(),

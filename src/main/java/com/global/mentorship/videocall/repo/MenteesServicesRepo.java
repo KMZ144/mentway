@@ -7,7 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import com.global.mentorship.base.repo.BaseRepo;
+import com.global.mentorship.videocall.dto.MenteeApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
+import com.global.mentorship.videocall.dto.MenteeServicesDto;
 import com.global.mentorship.videocall.dto.UpcomingServicesDto;
 import com.global.mentorship.videocall.entity.MenteesServices;
 
@@ -49,4 +51,26 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	List <MenteesServices> findMenteesServicesByServicesIdOrMenteeId(long serviceId,long menteeId);
 	
 	MenteesServices findByServicesIdAndMenteeId(long serviceId,long menteeId);
+
+
+	@Query("SELECT NEW com.global.mentorship.videocall.dto.MenteeServicesDto (" +
+	           "ms.mentee.id,ms.mentee.name,ms.mentee.imgUrl,ms.services.id,ms.applicationDetails,ms.startDate) " +
+	           "FROM MenteesServices ms " +
+	           "JOIN ms.services s " +
+	           "JOIN s.mentor me " +
+	           "WHERE me.isValid = true  AND me.id = :id "
+	           )
+	Page<MenteeServicesDto> findMenteesServicesByMentorId(long id, Pageable pageable);
+	
+	
+	@Query("SELECT NEW com.global.mentorship.videocall.dto.MenteeApplicationsDto (" +
+	           "ms.services.title,ms.services.details,ms.services.price ,"
+	           + "ms.services.duration,ms.applicationDetails,ms.startDate, "
+	           + "ms.services.mentor.id,ms.services.mentor.name,ms.services.mentor.imgUrl,"
+	           + "ms.services.mentor.category.name )" +
+	           "FROM MenteesServices ms " +
+	           "WHERE  ms.mentee.id = :id "
+	           )
+	Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id, Pageable pageable);
+
 }

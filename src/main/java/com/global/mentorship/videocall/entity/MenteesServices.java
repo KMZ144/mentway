@@ -30,7 +30,7 @@ public class MenteesServices extends BaseEntity<Long> {
 	private String applicationDetails;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "CHECK (status IN ('PENDING', 'ACCEPTED' , 'REJECTED')")
+	@Column(columnDefinition = "CHECK (status IN ('PENDING', 'ACCEPTED' , 'REJECTED') default PENDING")
 	private Status status;
 	
 	@Lob

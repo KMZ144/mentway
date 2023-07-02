@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.global.mentorship.payment.dto.PaymentMethodDto;
 import com.global.mentorship.payment.entity.PaymentMethod;
+import com.global.mentorship.payment.entity.Transcations;
 import com.global.mentorship.payment.mapper.PaymentMapper;
 import com.global.mentorship.payment.repo.PaymentMethodRepo;
 import com.global.mentorship.security.dto.UserDetailsImpl;
@@ -49,10 +50,10 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 	private final PaymentMethodRepo paymentMethodRepo;
 
 	private final PaymentMapper paymentMapper;
+	
+	private final TranscationsService transcationsService;
 
 	private final EmailService mailService;
-	
-//	private final TranscationsService transcationsService;
 
 	private final UserService userService;
 
@@ -138,11 +139,14 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 	public PaymentIntent createPayemntMethod(long id) throws StripeException {
 		User user = userService.findById(id);
-		if (!user.isHasValidPayment()) {
-			throw new NotValidPaymentException("the paymnt method is not valid try another one");
-		}
+//		if ((user.getStripeId()!=null)) {
+//			transcationsService.findById(null)
+//		}
 		Customer customer = createCustomer(user);
 		PaymentIntent paymentIntent = createPayemntIntent(customer);
+		Transcations transcations = new Transcations();
+		transcations.setPaymentIntentId(paymentIntent.getId());
+		transcationsService.insert(transcations);
 		return paymentIntent;
 	}
 	

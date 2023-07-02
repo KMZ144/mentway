@@ -1,7 +1,8 @@
 package com.global.mentorship.videocall.dto;
 
-import com.global.mentorship.base.dto.BaseDto;
-import com.global.mentorship.user.dto.MentorDto;
+import java.time.LocalDateTime;
+
+import com.global.mentorship.videocall.entity.Services;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ServicesDto extends BaseDto<Long> {
+public class MenteeApplicationsDto {
 	
 	private String title;
 	
@@ -23,6 +24,14 @@ public class ServicesDto extends BaseDto<Long> {
 	
 	@Min(0) @Max(3)
 	private int duration;
+	
+	private String applicationDetails;
+	
+	private LocalDateTime startDate;
+	
+	private Long mentorId;
+	private String mentorName;
+	private String mentorImgUrl;
+    private String categoryName;
 
-	private MentorDto mentorDto;
 }

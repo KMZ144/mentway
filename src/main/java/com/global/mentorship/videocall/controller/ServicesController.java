@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.security.dto.UserDetailsImpl;
 import com.global.mentorship.user.service.MentorService;
+import com.global.mentorship.videocall.dto.MenteeApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
 import com.global.mentorship.videocall.dto.ServicesDto;
@@ -47,6 +48,22 @@ public class ServicesController {
  	}
 
  
+ 	@GetMapping("applications/mentor/{id}")
+ 	public ResponseEntity<Page<MenteeServicesDto>> findMenteesServicesByMentorId(
+ 			@PathVariable long id,
+ 			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size){
+ 		return ResponseEntity.ok(menteesServicesService.findMenteesServicesByMentorId(id,page,size));
+ 	}
+ 	
+ 	@GetMapping("applications/mentee/{id}")
+ 	public ResponseEntity<Page<MenteeApplicationsDto>> findMenteesServicesByMenteeId(
+ 			@PathVariable long id,
+ 			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size){
+ 		return ResponseEntity.ok(menteesServicesService.findMenteesServicesByMenteeId(id,page,size));
+ 	}
+ 	
  
  	@GetMapping("/mentor/{id}")
  	public ResponseEntity<List<ServicesDto>> findServiceByMentorId(@PathVariable long id){

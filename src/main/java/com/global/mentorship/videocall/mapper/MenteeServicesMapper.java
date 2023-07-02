@@ -9,4 +9,5 @@ import com.global.mentorship.videocall.entity.MenteesServices;
 @Mapper
 public interface MenteeServicesMapper extends BaseMapper<MenteesServices, MenteeServicesDto> {
 
+	
 }
