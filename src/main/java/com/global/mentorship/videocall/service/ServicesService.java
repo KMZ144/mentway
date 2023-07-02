@@ -26,6 +26,10 @@ public class ServicesService extends BaseService<Services, Long> {
 	public List<Services> findServicesByMentorId(long id){
 		return servicesRepo.findServicesByMentorId(id);
 	}
+	
+//	public Mentor findMentorByServiceId(long id){
+//		return servicesRepo.findServicesByMentorId(id);
+//	}
 
 	
 	public Services insert(Services service,long id) {

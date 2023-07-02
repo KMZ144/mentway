@@ -108,4 +108,11 @@ public class ServicesController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(application);
 	}
 	
+//	@GetMapping("pay")
+//	public ResponseEntity<?> payMentorForService(@RequestParam long menteeId,long serviceId){
+//		menteesServicesService.payMentorForService(menteeId,serviceId);
+//	}
+	
+	
+	
 }
