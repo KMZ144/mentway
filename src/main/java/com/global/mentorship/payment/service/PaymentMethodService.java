@@ -64,7 +64,7 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		user.setHasValidPayment(true);
 		Refund refund =  refundWithPaymentIntent(paymentIntentId,100L);
 		userService.update(user);
-		mailService.sendEmail(user.getEmail(), 
+		mailService.sendEmail(user, 
 				"Payemnt Method Verification ",
 				"Your Payment Method has successfully verfied");
 		return user;
