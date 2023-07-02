@@ -67,10 +67,10 @@ public class ServicesController {
  	}
  	
  
- 	@GetMapping("/mentor")
- 	public ResponseEntity<List<ServicesDto>> findServiceByMentorId(Authentication auth){
- 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
- 		return ResponseEntity.ok(servicesMapper.map(servicesService.findServicesByMentorId(user.getId())));
+ 	@GetMapping("/mentor/{id}")
+ 	public ResponseEntity<List<ServicesDto>> findServiceByMentorId(@PathVariable long id){
+
+ 		return ResponseEntity.ok(servicesMapper.map(servicesService.findServicesByMentorId(id)));
  	}
 
 	@GetMapping("/review/mentors/{id}")
@@ -122,7 +122,7 @@ public class ServicesController {
 	@PatchMapping("/{serviceId}/mentee/{menteeid}")
 	public ResponseEntity<MenteeServicesDto> changeServiceStatus(@RequestParam String status
 			,@PathVariable(name = "serviceId") long serviceId,
-			@PathVariable(name = "menteeeId") long menteeId,
+			@PathVariable(name = "menteeid") long menteeId,
 			Authentication auth) throws StripeException{
 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
 		MenteeServicesDto application = menteesServicesService.changeApplicationStatus(serviceId, menteeId,status);
