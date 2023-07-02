@@ -55,13 +55,13 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 	
 	public Page<MenteeServicesDto> findMenteesServicesByMentorId(long id ,int page , int size ){
 		Pageable pageable = PageRequest.of(page, size);
-		 return menteesServicesRepo.findMenteesServicesByMentorId(id, pageable ,Arrays.asList(Status.PENDINNG.toString()));
+		 return menteesServicesRepo.findMenteesServicesByMentorId(id, pageable ,Arrays.asList(Status.PENDINNG));
 		 
 	}
 	
 	public Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id ,int page , int size ){
 		Pageable pageable = PageRequest.of(page, size);
-		 return menteesServicesRepo.findMenteesServicesByMenteeId(id, pageable,Arrays.asList(Status.PENDINNG.toString(),Status.REJECTED.toString()));
+		 return menteesServicesRepo.findMenteesServicesByMenteeId(id, pageable,Arrays.asList(Status.PENDINNG,Status.REJECTED));
 		 
 	}
 

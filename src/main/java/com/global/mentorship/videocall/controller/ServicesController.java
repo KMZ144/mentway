@@ -48,26 +48,29 @@ public class ServicesController {
  	}
 
  
- 	@GetMapping("applications/mentor/{id}")
+ 	@GetMapping("applications/mentor")
  	public ResponseEntity<Page<MenteeServicesDto>> findMenteesServicesByMentorId(
- 			@PathVariable long id,
  			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size){
- 		return ResponseEntity.ok(menteesServicesService.findMenteesServicesByMentorId(id,page,size));
+			@RequestParam(defaultValue = "5") int size,
+			Authentication auth){
+		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+ 		return ResponseEntity.ok(menteesServicesService.findMenteesServicesByMentorId(user.getId(),page,size));
  	}
  	
- 	@GetMapping("applications/mentee/{id}")
+ 	@GetMapping("applications/mentee")
  	public ResponseEntity<Page<MenteeApplicationsDto>> findMenteesServicesByMenteeId(
- 			@PathVariable long id,
  			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size){
- 		return ResponseEntity.ok(menteesServicesService.findMenteesServicesByMenteeId(id,page,size));
+			@RequestParam(defaultValue = "5") int size,
+			Authentication auth){
+		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+ 		return ResponseEntity.ok(menteesServicesService.findMenteesServicesByMenteeId(user.getId(),page,size));
  	}
  	
  
- 	@GetMapping("/mentor/{id}")
- 	public ResponseEntity<List<ServicesDto>> findServiceByMentorId(@PathVariable long id){
- 		return ResponseEntity.ok(servicesMapper.map(servicesService.findServicesByMentorId(id)));
+ 	@GetMapping("/mentor")
+ 	public ResponseEntity<List<ServicesDto>> findServiceByMentorId(Authentication auth){
+ 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+ 		return ResponseEntity.ok(servicesMapper.map(servicesService.findServicesByMentorId(user.getId())));
  	}
 
 	@GetMapping("/review/mentors/{id}")

@@ -12,6 +12,7 @@ import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
 import com.global.mentorship.videocall.dto.UpcomingServicesDto;
 import com.global.mentorship.videocall.entity.MenteesServices;
+import com.global.mentorship.videocall.entity.Status;
 
 public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 
@@ -60,7 +61,7 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "JOIN s.mentor me " +
 	           "WHERE me.isValid = true  AND me.id = :id AND ms.status in (:statusList) "
 	           )
-	Page<MenteeServicesDto> findMenteesServicesByMentorId(long id, Pageable pageable , List<String> statusList);
+	Page<MenteeServicesDto> findMenteesServicesByMentorId(long id, Pageable pageable , List<Status> statusList);
 	
 	
 	@Query("SELECT NEW com.global.mentorship.videocall.dto.MenteeApplicationsDto (" +
@@ -71,6 +72,6 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "FROM MenteesServices ms " +
 	           "WHERE  ms.mentee.id = :id AND (ms.status in :statusList )   "
 	           )
-	Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id, Pageable pageable,List<String> statusList );
+	Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id, Pageable pageable,List<Status> statusList );
 
 }
