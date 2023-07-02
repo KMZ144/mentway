@@ -15,6 +15,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MenteeApplicationsDto {
 	
+	private long applicationId;
+	
 	private String title;
 	
 	private String details;
@@ -34,4 +36,5 @@ public class MenteeApplicationsDto {
 	private String mentorImgUrl;
     private String categoryName;
 
+    private String status;
 }

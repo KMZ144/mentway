@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UpcomingServicesDto {
 	
+	private long applicationId;
 	private long serviceId;
 	private String meetingUrl;
 	private int duration;

@@ -28,7 +28,10 @@ import com.global.mentorship.videocall.service.ServicesService;
 import com.stripe.exception.StripeException;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/services")
@@ -119,21 +122,22 @@ public class ServicesController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(application);
 	}
 	
-	@PatchMapping("/{serviceId}/mentee/{menteeid}")
-	public ResponseEntity<MenteeServicesDto> changeServiceStatus(@RequestParam String status
-			,@PathVariable(name = "serviceId") long serviceId,
-			@PathVariable(name = "menteeid") long menteeId,
+	@PatchMapping("/application/{id}")
+	public ResponseEntity<MenteeServicesDto> changeApplicationStatus(@RequestParam String status
+			,@PathVariable long id,
 			Authentication auth) throws StripeException{
 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
-		MenteeServicesDto application = menteesServicesService.changeApplicationStatus(serviceId, menteeId,status);
+		MenteeServicesDto application = menteesServicesService.changeApplicationStatus(id,status);
 		return ResponseEntity.status(HttpStatus.CREATED).body(application);
 	}
 	
-//	@GetMapping("pay")
-//	public ResponseEntity<?> payMentorForService(@RequestParam long menteeId,long serviceId){
-//		menteesServicesService.payMentorForService(menteeId,serviceId);
-//	}
-	
-	
+	@GetMapping("pay/application/{id}")
+	public ResponseEntity<?> payMentorForSession(@PathVariable long id) throws StripeException{
+		menteesServicesService.transferFundsToMentor(id);
+		Map<String,Boolean> map = new HashMap<>();
+		map.put("success", true);
+		return ResponseEntity.ok(map);
+	}
+		
 	
 }

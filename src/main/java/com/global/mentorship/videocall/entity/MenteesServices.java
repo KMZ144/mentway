@@ -44,6 +44,8 @@ public class MenteesServices extends BaseEntity<Long> {
 	private String meetingUrl;
 	
 	private LocalDateTime startDate;
+	
+	private boolean paidDone;
 }
 
 

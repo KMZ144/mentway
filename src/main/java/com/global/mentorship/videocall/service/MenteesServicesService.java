@@ -8,14 +8,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import com.global.mentorship.base.service.BaseService;
 import com.global.mentorship.error.NotAvaliableTimeException;
 import com.global.mentorship.error.NotValidPaymentException;
 import com.global.mentorship.notification.service.EmailService;
+import com.global.mentorship.payment.entity.Transcations;
 import com.global.mentorship.payment.service.PaymentMethodService;
+import com.global.mentorship.payment.service.TranscationsService;
 import com.global.mentorship.user.entity.Mentee;
 import com.global.mentorship.user.entity.Mentor;
 import com.global.mentorship.user.service.MenteeService;
@@ -29,6 +34,8 @@ import com.global.mentorship.videocall.entity.Status;
 import com.global.mentorship.videocall.mapper.MenteeServicesMapper;
 import com.global.mentorship.videocall.repo.MenteesServicesRepo;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.model.Transfer;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,7 +54,7 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 	private final EmailService mailService;
 
 	private final PaymentMethodService paymentMethodService;
-	
+
 	public Page<MenteeReviewDto> findAllReviewsByMentorId(long id, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		return menteesServicesRepo.findAllReviewsByMentorId(id, pageable);
@@ -97,17 +104,9 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 
 	}
 	
-	public void payMentorForService(long menteeId,long serviceId) {
-		MenteesServices app = menteesServicesRepo.findByServicesIdAndMenteeId(serviceId, menteeId);
-		Services  services = app.getServices();
-		String customerId = services.getMentor().getStripeId();
-		long amount = services.getPrice();
-//		paymentMethodService.payMentorForService(customerId,amount);
-
-	}
-
-	public MenteeServicesDto changeApplicationStatus(long serviceId,long menteeId,String status) throws StripeException {
-		MenteesServices app = menteesServicesRepo.findByServicesIdAndMenteeId(serviceId, menteeId);
+	public MenteeServicesDto changeApplicationStatus(long appId,String status) throws StripeException {
+		MenteesServices app = menteesServicesRepo.findById(appId)
+				.orElseThrow(() ->  new NoSuchElementException("no application was found"));
 		Mentee mentee = app.getMentee();
 		long amount = app.getServices().getPrice();
 		if (status.equals("accepted")) {
@@ -117,6 +116,9 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 	}
 	
 	private MenteesServices rejectApplication(MenteesServices app) {
+		Mentee mentee = app.getMentee();
+		mailService.sendEmail(mentee,"Your application Has been rejected ",
+				"your application for "+app.getServices().getTitle()+ "has been rejected ");
 		app.setStatus(Status.REJECTED);
 		update(app);
 		return app;
@@ -149,4 +151,13 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 		}
 		return true;
 	}
-}
+
+		public void transferFundsToMentor(long id) throws StripeException {
+			MenteesServices menteesServices = findById(id);
+			paymentMethodService.transferFundsToMentor(menteesServices);
+			menteesServices.setPaidDone(true);
+			update(menteesServices);
+		}
+		
+	}
+

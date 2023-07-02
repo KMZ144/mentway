@@ -19,6 +19,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenteeServicesDto {
+	
+	private long applicationId;
 
 	private long  menteeId;
 
@@ -33,4 +35,5 @@ public class MenteeServicesDto {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime startDate;
 
+	private String status;
 }
