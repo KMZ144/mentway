@@ -50,7 +50,7 @@ public class PaymentController {
 		 return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping("validate/mentor")
+	@GetMapping("/validate/mentor")
 	public ResponseEntity<Map<String,String>> validateMentorPayment(Authentication auth) throws StripeException {
 		UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
 		Map<String,String> map = new HashMap<>();
