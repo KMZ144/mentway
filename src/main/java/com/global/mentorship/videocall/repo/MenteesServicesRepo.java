@@ -81,7 +81,7 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "ms.id,ms.services.title,ms.services.details,ms.services.price ,"
 	           + "ms.services.duration,ms.applicationDetails,ms.startDate,ms.report, "
 	           + "ms.services.mentor.id,ms.services.mentor.name,ms.services.mentor.imgUrl,"
-	           + "ms.services.mentor.category.name,ms.status )" +
+	           + "ms.services.mentor.category.name )" +
 	           "FROM MenteesServices ms " +
 	           "WHERE  ms.paidDone = false AND ms.startDate < :date   "
 	           )
