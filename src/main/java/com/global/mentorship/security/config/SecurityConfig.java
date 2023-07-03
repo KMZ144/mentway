@@ -2,6 +2,7 @@ package com.global.mentorship.security.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,7 +29,11 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig  {
+	
 
+	@Value("${systemPath}")
+	private String fileUpload;
+	
 	private final JwtRequestFilter jwtRequestFilter;
 	
 	@Bean
@@ -51,6 +56,7 @@ public class SecurityConfig  {
 		.authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/auth/register/mentor").permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/auth/register/mentee").permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/categories").permitAll())
+		.authorizeHttpRequests(auth -> auth.requestMatchers(fileUpload).permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET,"api/v1/mentors/**").permitAll())
 		.authorizeHttpRequests(auth -> auth.requestMatchers("swagger-ui/**","v3/api-docs/**").permitAll())
 		.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
