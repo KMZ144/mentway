@@ -98,14 +98,14 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		long amount = menteesServices.getServices().getPrice();
 		Mentor mentor = menteesServices.getServices().getMentor();
 		Map<String, Object> params1 = new HashMap<>();
-		params1.put("amount", amount + 1000L);
+		params1.put("amount", amount*100 + 1000L);
 		params1.put("currency", "usd");
 		params1.put("source", "tok_bypassPending");
 
 		Charge charge = Charge.create(params1);
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("amount", amount);
+		params.put("amount", amount*100);
 		params.put("currency", "usd");
 		params.put("destination", mentor.getStripeId());
 		params.put("transfer_group", "ORDER_95");
@@ -125,7 +125,7 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 		PaymentMethodCollection paymentMethodCollection = getPaymentMethodsWithCustomer(customerId);
 		String paymentMethodId = paymentMethodCollection.getData().get(0).getId();
-		PaymentIntent paymentIntent = chargeCustomer(customerId, paymentMethodId, amount);
+		PaymentIntent paymentIntent = chargeCustomer(customerId, paymentMethodId, amount*100);
 	}
 
 	private PaymentIntent chargeCustomer(String customerId, String PaymentMethodId, long amount)
