@@ -66,8 +66,8 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 	public String validateMentorPayment(long id) throws StripeException {
 		User user = userService.findById(id);
-		Account account = createAccountForMentor(user);
-		String activateUrl = activateAccount(user, account);
+		String accountId = createAccountForMentor(user);
+		String activateUrl = activateAccount(user, accountId);
 		return activateUrl;
 	}
 
@@ -87,7 +87,6 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		user.setStripeId(accountId);
 		userService.update(user);
 		return accountLink.getUrl();
-
 	}
 	
 	public void transferFundsToMentor(MenteesServices menteesServices) throws StripeException {
