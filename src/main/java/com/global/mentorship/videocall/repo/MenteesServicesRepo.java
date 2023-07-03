@@ -35,9 +35,9 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "JOIN ms.services s " +
 	           "JOIN ms.mentee m "+
 	           "JOIN s.mentor me " +
-	           "WHERE me.isValid = true AND ms.status = ACCEPTED AND ms.startDate > CURRENT_TIMESTAMP AND me.id = :id "
+	           "WHERE me.isValid = true AND ms.status = ACCEPTED AND (ms.startDate > now() OR ms.startDate > :date) AND me.id = :id "
 	           )
-	Page<UpcomingServicesDto> findAllUpcomingSessionsByMentorId(long id , Pageable pageable);
+	Page<UpcomingServicesDto> findAllUpcomingSessionsByMentorId(long id , Pageable pageable,LocalDateTime date);
 
 	@Query("SELECT NEW com.global.mentorship.videocall.dto.UpcomingServicesDto (" +
 	           "ms.id,s.id,ms.meetingUrl,s.duration,me.id ,me.name, me.imgUrl,s.details,ms.startDate) " +
@@ -45,10 +45,10 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "JOIN ms.services s " +
 	           "JOIN ms.mentee m "+
 	           "JOIN s.mentor me " +
-	           "WHERE me.isValid = true AND ms.status = ACCEPTED AND (ms.startDate > now() OR ms.startDate > now()+s.duration)  AND m.id = :id "
+	           "WHERE me.isValid = true AND ms.status = ACCEPTED AND (ms.startDate > now() OR ms.startDate > :date)  AND m.id = :id "
 	           )
 	
-	Page<UpcomingServicesDto> findAllUpcomingSessionsByMenteeId(long id , Pageable pageable);
+	Page<UpcomingServicesDto> findAllUpcomingSessionsByMenteeId(long id , Pageable pageable , LocalDateTime date);
 
 	
 	List <MenteesServices> findMenteesServicesByServicesIdOrMenteeId(long serviceId,long menteeId);

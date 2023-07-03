@@ -1,7 +1,9 @@
 package com.global.mentorship.videocall.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -75,12 +77,14 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 
 	public Page<UpcomingServicesDto> findAllUpcomingSessionsByMentorId(long id, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
-		return menteesServicesRepo.findAllUpcomingSessionsByMentorId(id, pageable);
+		LocalDateTime date = LocalDateTime.now().minusHours(3);
+		return menteesServicesRepo.findAllUpcomingSessionsByMentorId(id, pageable,date);
 	};
 
 	public Page<UpcomingServicesDto> findAllUpcomingSessionsByMenteeId(long id, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
-		return menteesServicesRepo.findAllUpcomingSessionsByMenteeId(id, pageable);
+		LocalDateTime date = LocalDateTime.now().minusHours(3);  
+		return menteesServicesRepo.findAllUpcomingSessionsByMenteeId(id, pageable, date);
 	};
 
 	public MenteeServicesDto requestService(MenteeServicesDto application, long serviceId, long menteeId) {
