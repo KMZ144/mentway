@@ -1,7 +1,10 @@
 package com.global.mentorship.security.controller;
 
+import java.io.IOException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.security.dto.AuthRequest;
 import com.global.mentorship.security.dto.AuthResposne;
+import com.global.mentorship.security.dto.RegisteredMentor;
 import com.global.mentorship.security.service.AuthService;
 import com.global.mentorship.security.service.JWTUtil;
+import com.global.mentorship.user.dto.MentorDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,9 +33,10 @@ public class AuthController {
 	}
 	
 	
-	@PostMapping("/register")
-	public  String register () {
-		return "register";
+	@PostMapping( consumes ={ "multipart/form-data" } , path = "/register/mentor")
+	public  ResponseEntity<AuthResposne> register (@ModelAttribute RegisteredMentor mentorDto) throws IOException {
+		return ResponseEntity.ok(authService.registerMentor(mentorDto));
+	
 	}
 
 }
