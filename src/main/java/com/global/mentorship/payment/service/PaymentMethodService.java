@@ -151,11 +151,14 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 	public PaymentIntent createPayemntMethod(long id) throws StripeException {
 		User user = userService.findById(id);
-//		if ((user.getStripeId()!=null)) {
-//			transcationsService.findById(null)
-//		}
-		Customer customer = createCustomer(user);
-		PaymentIntent paymentIntent = createPayemntIntent(customer);
+		String customerId ;
+		if ((user.getStripeId()!=null)) {
+			customerId = createCustomer(user); 
+		}
+		else {
+			customerId = user.getStripeId();
+		}
+		PaymentIntent paymentIntent = createPayemntIntent(customerId);
 		Transcations transcations = new Transcations();
 		transcations.setPaymentIntentId(paymentIntent.getId());
 		transcations.setUser(user);
@@ -163,18 +166,18 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		return paymentIntent;
 	}
 
-	private Customer createCustomer(User user) throws StripeException {
+	private String createCustomer(User user) throws StripeException {
 		CustomerCreateParams params = CustomerCreateParams.builder().setEmail(user.getEmail()).setName(user.getName())
 				.build();
 		Customer customer = Customer.create(params);
 		user.setStripeId(customer.getId());
 		userService.update(user);
-		return customer;
+		return customer.getId();
 
 	}
 
-	private PaymentIntent createPayemntIntent(Customer customer) throws StripeException {
-		PaymentIntentCreateParams params = PaymentIntentCreateParams.builder().setCustomer(customer.getId())
+	private PaymentIntent createPayemntIntent(String CustomerId) throws StripeException {
+		PaymentIntentCreateParams params = PaymentIntentCreateParams.builder().setCustomer(CustomerId)
 				.setSetupFutureUsage(PaymentIntentCreateParams.SetupFutureUsage.OFF_SESSION).setAmount(100L)
 				.setCurrency("usd").setAutomaticPaymentMethods(
 						PaymentIntentCreateParams.AutomaticPaymentMethods.builder().setEnabled(true).build())

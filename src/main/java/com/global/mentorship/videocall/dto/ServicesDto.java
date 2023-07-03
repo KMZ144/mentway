@@ -24,5 +24,4 @@ public class ServicesDto extends BaseDto<Long> {
 	@Min(0) @Max(3)
 	private int duration;
 
-	private MentorDto mentorDto;
 }
