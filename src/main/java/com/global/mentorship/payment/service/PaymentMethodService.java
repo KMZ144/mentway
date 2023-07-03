@@ -72,7 +72,6 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 	}
 
 	private String createAccountForMentor(User user) throws StripeException {
-		
 		if (user.getStripeId()!=null) {
 			return user.getStripeId();
 		}
@@ -157,8 +156,10 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 	public PaymentIntent createPayemntMethod(long id) throws StripeException {
 		User user = userService.findById(id);
 		String customerId ;
-		if ((user.getStripeId()!=null)) {
+		if ((user.getStripeId()==null)) {
 			customerId = createCustomer(user); 
+			user.setStripeId(customerId);
+			userService.update(user);
 		}
 		else {
 			customerId = user.getStripeId();
