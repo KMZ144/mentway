@@ -73,9 +73,14 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 
 	private String createAccountForMentor(User user) throws StripeException {
 		
+		if (user.getStripeId()!=null) {
+			return user.getStripeId();
+		}
 		AccountCreateParams params = AccountCreateParams.builder().setEmail(user.getEmail())
 				.setType(AccountCreateParams.Type.EXPRESS).build();
 		Account account = Account.create(params);
+		user.setStripeId(account.getId());
+		userService.update(user);
 		return account.getId();
 	}
 
@@ -85,6 +90,7 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 				.setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING).build();
 		AccountLink accountLink = AccountLink.create(params1);
 		user.setStripeId(accountId);
+		user.setHasValidPayment(true);
 		userService.update(user);
 		return accountLink.getUrl();
 	}
