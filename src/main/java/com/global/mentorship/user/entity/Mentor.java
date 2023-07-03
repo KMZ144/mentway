@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
@@ -20,6 +21,7 @@ public class Mentor extends User{
 	@Lob
 	private String coverLetter;
 	
+	@Column(columnDefinition = "boolean default true")
 	private boolean isValid;
 	
 	private String cvUrl;
