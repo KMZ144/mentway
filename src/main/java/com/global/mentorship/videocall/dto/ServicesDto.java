@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ServicesDto  {
+public class ServicesDto extends BaseDto<Long> {
 	
 	private String title;
 	
