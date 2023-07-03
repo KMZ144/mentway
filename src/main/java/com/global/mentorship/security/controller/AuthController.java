@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.security.dto.AuthRequest;
 import com.global.mentorship.security.dto.AuthResposne;
+import com.global.mentorship.security.dto.RegisteredMentee;
 import com.global.mentorship.security.dto.RegisteredMentor;
 import com.global.mentorship.security.service.AuthService;
 import com.global.mentorship.security.service.JWTUtil;
@@ -34,8 +35,14 @@ public class AuthController {
 	
 	
 	@PostMapping( consumes ={ "multipart/form-data" } , path = "/register/mentor")
-	public  ResponseEntity<AuthResposne> register (@ModelAttribute RegisteredMentor mentorDto) throws IOException {
+	public  ResponseEntity<AuthResposne> registerMentor (@ModelAttribute RegisteredMentor mentorDto) throws IOException {
 		return ResponseEntity.ok(authService.registerMentor(mentorDto));
+	
+	}
+	
+	@PostMapping( consumes ={ "multipart/form-data" } , path = "/register/mentee")
+	public  ResponseEntity<AuthResposne> registerMentee (@ModelAttribute RegisteredMentee menteeDto) throws IOException {
+		return ResponseEntity.ok(authService.registerMentee(menteeDto));
 	
 	}
 

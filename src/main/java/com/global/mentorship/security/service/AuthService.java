@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -57,6 +58,9 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 
 	private final JWTUtil jwtUtil;
+	
+	@Value("${systemPath}")
+	private String systemPath;
 
 	public AuthResposne authenticate(String email, String password) {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
@@ -112,7 +116,7 @@ public class AuthService {
 	}
 
 	private String saveFile(String fileName, MultipartFile multipartFile) throws IOException {
-		Path uploadPath = Paths.get("Files-Upload");
+		Path uploadPath = Paths.get(systemPath);
 
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
