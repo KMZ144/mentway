@@ -1,13 +1,18 @@
 package com.global.mentorship.security.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.codehaus.plexus.util.IOUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.security.dto.AuthRequest;
@@ -45,5 +50,7 @@ public class AuthController {
 		return ResponseEntity.ok(authService.registerMentee(menteeDto));
 	
 	}
+	
+
 
 }

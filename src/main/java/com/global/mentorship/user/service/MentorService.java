@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.global.mentorship.base.service.BaseService;
+import com.global.mentorship.error.DuplicatedUserException;
 import com.global.mentorship.user.dto.MentorDto;
 import com.global.mentorship.user.dto.MentorInfoDto;
 import com.global.mentorship.user.entity.Mentor;
@@ -35,5 +36,8 @@ public class MentorService extends BaseService<Mentor, Long> {
 	public MentorInfoDto editMentorById(long id) {
 		return null;
 	}
-	
+
+	public Mentor findByEmail(String email) {
+		return mentorRepo.findByEmail(email);
+	}
 }

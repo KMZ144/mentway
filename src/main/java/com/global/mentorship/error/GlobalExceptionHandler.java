@@ -92,5 +92,12 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 	
+	@ExceptionHandler(DuplicatedUserException.class)
+	public ResponseEntity<Error> handleDuplicatedUserException(DuplicatedUserException ex){
+		Error error = new Error("register Exception",new HashMap<>());
+		error.addError("register", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
 	
 }

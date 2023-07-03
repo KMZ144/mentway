@@ -1,5 +1,6 @@
 package com.global.mentorship.security.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.global.mentorship.error.DuplicatedUserException;
 import com.global.mentorship.payment.service.PaymentMethodService;
 import com.global.mentorship.security.dto.AuthResposne;
 import com.global.mentorship.security.dto.RegisteredMentee;
@@ -79,6 +81,9 @@ public class AuthService {
 	}
 
 	public AuthResposne registerMentor(RegisteredMentor registeredMentor) throws IOException {
+		if (mentorService.findByEmail(registeredMentor.getEmail())!=null) {
+			throw new DuplicatedUserException("this email has laready been registered");
+		};
 		MultipartFile multipartFile = registeredMentor.getImg();
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		long size = multipartFile.getSize();
@@ -99,6 +104,9 @@ public class AuthService {
 	}
 
 	public AuthResposne registerMentee(RegisteredMentee registeredMentee) throws IOException {
+		if (menteeService.findByEmail(registeredMentee.getEmail())!=null) {
+			throw new DuplicatedUserException("this email has laready been registered");
+		};
 		MultipartFile multipartFile = registeredMentee.getImg();
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		long size = multipartFile.getSize();
@@ -117,7 +125,7 @@ public class AuthService {
 
 	private String saveFile(String fileName, MultipartFile multipartFile) throws IOException {
 		Path uploadPath = Paths.get(systemPath);
-
+		
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
 		}
@@ -130,7 +138,7 @@ public class AuthService {
 		} catch (IOException ioe) {
 			throw new IOException("Could not save file: " + fileName, ioe);
 		}
-		return filePath.toString();
+		return "images/"+fileCode + "-" + fileName;
 
 	}
 

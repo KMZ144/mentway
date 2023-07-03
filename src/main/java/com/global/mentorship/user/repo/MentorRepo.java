@@ -1,6 +1,8 @@
 package com.global.mentorship.user.repo;
 
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -36,5 +38,8 @@ public interface MentorRepo extends BaseRepo<Mentor, Long> {
 	           "JOIN m.category c " +
 	           "WHERE m.isValid = true AND m.id = :id ")
 	MentorInfoDto findMentorById(long id);
+
+
+	Mentor findByEmail(String email);
 	
 	}
