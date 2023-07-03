@@ -47,6 +47,5 @@ public class MentorController {
 	{
 		return ResponseEntity.ok(mentorService.editMentorById(id));
 	}
-	
-	
+
 }

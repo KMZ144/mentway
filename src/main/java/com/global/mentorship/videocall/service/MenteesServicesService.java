@@ -24,6 +24,7 @@ import com.global.mentorship.payment.service.TranscationsService;
 import com.global.mentorship.user.entity.Mentee;
 import com.global.mentorship.user.entity.Mentor;
 import com.global.mentorship.user.service.MenteeService;
+import com.global.mentorship.videocall.dto.AdminApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
@@ -152,12 +153,19 @@ public class MenteesServicesService extends BaseService<MenteesServices, Long> {
 		return true;
 	}
 
-		public void transferFundsToMentor(long id) throws StripeException {
+	public void transferFundsToMentor(long id) throws StripeException {
 			MenteesServices menteesServices = findById(id);
 			paymentMethodService.transferFundsToMentor(menteesServices);
 			menteesServices.setPaidDone(true);
 			update(menteesServices);
 		}
-		
+	
+	public Page<AdminApplicationsDto> getAllUnpaidApplications(int page, int size){
+		Pageable pageable = PageRequest.of(page, size);
+		LocalDateTime date = LocalDateTime.now().minusDays(2);
+		return menteesServicesRepo.getAllUnpaidApplications(pageable,date); 
 	}
+	
+	
+}
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.global.mentorship.security.dto.UserDetailsImpl;
 import com.global.mentorship.user.service.MentorService;
+import com.global.mentorship.videocall.dto.AdminApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
@@ -137,6 +138,15 @@ public class ServicesController {
 		Map<String,Boolean> map = new HashMap<>();
 		map.put("success", true);
 		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping("/applications/unpaid")
+	public ResponseEntity<Page<AdminApplicationsDto>> getUnpaidApplications(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size
+			){
+		return ResponseEntity.ok (menteesServicesService.getAllUnpaidApplications(page, size));
+		
 	}
 		
 	

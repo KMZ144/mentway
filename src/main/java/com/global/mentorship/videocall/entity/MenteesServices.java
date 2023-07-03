@@ -45,6 +45,7 @@ public class MenteesServices extends BaseEntity<Long> {
 	
 	private LocalDateTime startDate;
 	
+	@Column(columnDefinition = "boolean default false")
 	private boolean paidDone;
 }
 

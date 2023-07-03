@@ -5,8 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import com.global.mentorship.base.repo.BaseRepo;
+import com.global.mentorship.videocall.dto.AdminApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeApplicationsDto;
 import com.global.mentorship.videocall.dto.MenteeReviewDto;
 import com.global.mentorship.videocall.dto.MenteeServicesDto;
@@ -73,5 +75,16 @@ public interface MenteesServicesRepo extends BaseRepo<MenteesServices, Long> {
 	           "WHERE  ms.mentee.id = :id AND (ms.status in :statusList )   "
 	           )
 	Page<MenteeApplicationsDto> findMenteesServicesByMenteeId(long id, Pageable pageable,List<Status> statusList );
+
+
+	@Query("SELECT NEW com.global.mentorship.videocall.dto.AdminApplicationsDto (" +
+	           "ms.id,ms.services.title,ms.services.details,ms.services.price ,"
+	           + "ms.services.duration,ms.applicationDetails,ms.startDate,ms.report, "
+	           + "ms.services.mentor.id,ms.services.mentor.name,ms.services.mentor.imgUrl,"
+	           + "ms.services.mentor.category.name,ms.status )" +
+	           "FROM MenteesServices ms " +
+	           "WHERE  ms.paidDone = false AND ms.startDate < :date   "
+	           )
+	Page<AdminApplicationsDto> getAllUnpaidApplications(Pageable pageable,LocalDateTime date);
 
 }
