@@ -3,6 +3,7 @@ package com.global.mentorship.videocall.dto;
 import java.time.LocalDateTime;
 
 import com.global.mentorship.videocall.entity.Services;
+import com.global.mentorship.videocall.entity.Status;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -36,5 +37,5 @@ public class MenteeApplicationsDto {
 	private String mentorImgUrl;
     private String categoryName;
 
-    private String status;
+    private Status status;
 }

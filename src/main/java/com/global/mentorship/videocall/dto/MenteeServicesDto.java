@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.global.mentorship.user.entity.Mentee;
 import com.global.mentorship.videocall.entity.Services;
+import com.global.mentorship.videocall.entity.Status;
 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
@@ -35,5 +36,5 @@ public class MenteeServicesDto {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime startDate;
 
-	private String status;
+	private Status status;
 }
