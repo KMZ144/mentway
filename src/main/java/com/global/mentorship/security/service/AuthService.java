@@ -97,7 +97,7 @@ public class AuthService {
 		mentor.setImgUrl(filecode);
 		mentor.setPassword(passwordEncoder.encode(registeredMentor.getPassword()));
 		mentor.setRoles(Set.of(role));
-		mentor.setValid(false);
+		mentor.setValid(true);
 		Mentor savedMentor = mentorService.insert(mentor);
 		final UserDetailsImpl userDetails = new UserDetailsImpl(savedMentor);
 		return getJWTToken(userDetails);
