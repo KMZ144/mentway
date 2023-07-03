@@ -71,19 +71,20 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		return activateUrl;
 	}
 
-	private Account createAccountForMentor(User user) throws StripeException {
+	private String createAccountForMentor(User user) throws StripeException {
+		
 		AccountCreateParams params = AccountCreateParams.builder().setEmail(user.getEmail())
 				.setType(AccountCreateParams.Type.EXPRESS).build();
 		Account account = Account.create(params);
-		return account;
+		return account.getId();
 	}
 
-	private String activateAccount(User user, Account account) throws StripeException {
-		AccountLinkCreateParams params1 = AccountLinkCreateParams.builder().setAccount(account.getId())
+	private String activateAccount(User user, String accountId) throws StripeException {
+		AccountLinkCreateParams params1 = AccountLinkCreateParams.builder().setAccount(accountId)
 				.setRefreshUrl("http://localhost:4200").setReturnUrl("http://localhost:4200")
 				.setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING).build();
 		AccountLink accountLink = AccountLink.create(params1);
-		user.setStripeId(account.getId());
+		user.setStripeId(accountId);
 		userService.update(user);
 		return accountLink.getUrl();
 
@@ -121,7 +122,6 @@ public class PaymentMethodService extends BaseService<PaymentMethod, Long> {
 		PaymentMethodCollection paymentMethodCollection = getPaymentMethodsWithCustomer(customerId);
 		String paymentMethodId = paymentMethodCollection.getData().get(0).getId();
 		PaymentIntent paymentIntent = chargeCustomer(customerId, paymentMethodId, amount);
-
 	}
 
 	private PaymentIntent chargeCustomer(String customerId, String PaymentMethodId, long amount)
